@@ -1,6 +1,7 @@
 import { render } from "react-dom";
 import * as React from "react";
 
+import "reset-css";
 import "./style";
 
 const Root = () =>
