@@ -26,15 +26,15 @@ You should only have to do these steps once, when you clone the repository.
 5. Once you clone the repository, navigate to it in PowerShell and configure your Git user like so (substituting your own name and email, of course):
 
     ```powershell
-    git config --local user.name "Andrew Hoog"
-    git config --local user.email "arhf79@mst.edu"
+    git config --local user.name "Ryan Duchene"
+    git config --local user.email "rcdvxd@mst.edu"
     ```
 
     This sets up your Git user information for this project. Make sure to use your school email for this step. If you want to, you can also configure your global Git user with your personal email address as shown below, but this isn't necessary.
 
     ```powershell
-    git config --global user.name "Andrew Hoog"
-    git config --global user.email "andrew.hoog@gmail.com"
+    git config --global user.name "Ryan Duchene"
+    git config --global user.email "duchenerc@gmail.com"
     ```
 6. Finally, run `yarn install`. This will install all the dependencies and packages that are required to build the project in a local folder called `node_modules` (which is not kept in Git due to its size). It will take a few seconds.
 
