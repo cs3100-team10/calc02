@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "sourceMap": true,
+        "newLine": "LF",
+        "target": "es2015"
+    }
+}
