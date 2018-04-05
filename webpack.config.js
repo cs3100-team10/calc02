@@ -28,7 +28,7 @@ const config = {
 
             // This rule compiles our Sass into CSS
             {
-                test: /.scss$/,
+                test: /.(scss|css)$/,
                 use: extractSass.extract({
                     use: [
                         {
@@ -54,7 +54,7 @@ const config = {
         extractSass
     ],
     resolve: {
-        extensions: [".ts", ".tsx", ".scss", ".js"]
+        extensions: [".ts", ".tsx", ".scss", ".css", ".js"]
     },
     devServer: {
         contentBase: path.join(__dirname, "dist"),
