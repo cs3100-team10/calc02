@@ -4,11 +4,6 @@ import * as React from "react";
 import "reset-css";
 import "./style";
 
-const Root = () =>
-{
-    return (
-        <h1>Hello world!</h1>
-    );
-}
+import App from "./App/App";
 
-render(<Root />, document.getElementById("render"));
+render(<App />, document.getElementById("render"));

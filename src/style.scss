@@ -1,4 +1,35 @@
-body
+*
 {
-    background: white;
+    box-sizing: border-box;
+}
+
+
+#render
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#input
+{
+    input[type="text"]
+    {
+        display: block;
+        width: 100%;
+    }
+}
+
+#buttons
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+button
+{
+    width: 30%;
+    margin: 0.5rem 0 0;
 }
