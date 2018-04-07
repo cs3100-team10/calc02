@@ -1,6 +1,9 @@
 import { render } from "react-dom";
 import * as React from "react";
 
+if (module.hot)
+  module.hot.accept();
+
 import "reset-css";
 import "./style";
 
