@@ -5055,12 +5055,6 @@ ohm-js@^0.14.0:
     is-buffer "^1.1.4"
     util-extend "^1.0.3"
 
-ohm-loader@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/ohm-loader/-/ohm-loader-0.0.3.tgz#d08932dc67dd8a7b754bd4d37b07014a53ab6c4d"
-  dependencies:
-    ohm-js "^0.14.0"
-
 on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
