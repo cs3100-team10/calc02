@@ -26,6 +26,12 @@ const config = {
                 use: "ts-loader"
             },
 
+            // This rule compiles our Ohm grammars
+            {
+                test: /.ohm$/,
+                use: "ohm-loader"
+            },
+
             // This rule compiles our Sass into CSS
             {
                 test: /.(scss|css)$/,
@@ -54,7 +60,7 @@ const config = {
         extractSass
     ],
     resolve: {
-        extensions: [".ts", ".tsx", ".scss", ".css", ".js"]
+        extensions: [".ts", ".tsx", ".scss", ".css", ".js", ".ohm"]
     },
     devServer: {
         contentBase: path.join(__dirname, "dist"),
