@@ -47,7 +47,15 @@ class App extends React.Component<AppProps, AppState>
     {
         // Eventually, we will have to replace this array
         // with a better method of storing the buttons we will need to render
-        let orderNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+        
+        let orderNumbers = ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", "+"];
+
+        //let row1 = [7, 8, 9]
+        //let row2 = [4, 5, 6]
+        //let row3 = [1, 2, 3]
+        //let row4 = [0]
+        
+        //let orderNumbers = [row1, row2, row3, row4]
 
         // Look up the `map` method on arrays.
         // Basically, for each nth item in the array, a function is called
