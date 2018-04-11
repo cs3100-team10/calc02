@@ -2,9 +2,10 @@ import { render } from "react-dom";
 import * as React from "react";
 
 if (module.hot)
-  module.hot.accept();
+{
+    module.hot.accept();
+}
 
-import "reset-css";
 import "./style";
 
 import App from "./App/App";
