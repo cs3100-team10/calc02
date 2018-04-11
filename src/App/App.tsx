@@ -50,39 +50,18 @@ class App extends React.Component<AppProps, AppState>
 
     render()
     {
-        // Eventually, we will have to replace this array
-        // with a better method of storing the buttons we will need to render
-        
-        let orderNumbers = [" ", " ", "<<", "clr", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", " ", "=", "+"];
-
-        //let row1 = [7, 8, 9]
-        //let row2 = [4, 5, 6]
-        //let row3 = [1, 2, 3]
-        //let row4 = [0]
-        
-        //let orderNumbers = [row1, row2, row3, row4]
-
-        // Look up the `map` method on arrays.
-        // Basically, for each nth item in the array, a function is called
-        // that transforms the nth element of a new array. The new array
-        // is then returned.
-        // In this case, we're creating an array of EntryButtons
-        let numbers = orderNumbers.map((num, i) =>
+        const CharacterButton = (props) =>
         {
+
             const callback = (event) =>
             {
                 event.preventDefault();
                 this.userInput.current.focus();
-                this.handleButtonPushed(num.toString())
+                this.handleButtonPushed(props.children);
             }
-            
-            return (
-                <EntryButton key={i}
-                callback={callback}>
-                    {num.toString()}
-                </EntryButton>
-            );
-        });
+
+            return <EntryButton callback={callback}>{props.children}</EntryButton>
+        }
 
         return (
             <main id="calculator">
@@ -90,7 +69,26 @@ class App extends React.Component<AppProps, AppState>
                     <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} ref={this.userInput} />
                 </section>
                 <section id="buttons">
-                    {numbers}
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton>&larr;</EntryButton>
+                    <EntryButton>clear</EntryButton>
+                    <CharacterButton>7</CharacterButton>
+                    <CharacterButton>8</CharacterButton>
+                    <CharacterButton>9</CharacterButton>
+                    <CharacterButton>/</CharacterButton>
+                    <CharacterButton>4</CharacterButton>
+                    <CharacterButton>5</CharacterButton>
+                    <CharacterButton>6</CharacterButton>
+                    <CharacterButton>*</CharacterButton>
+                    <CharacterButton>1</CharacterButton>
+                    <CharacterButton>2</CharacterButton>
+                    <CharacterButton>3</CharacterButton>
+                    <CharacterButton>-</CharacterButton>
+                    <CharacterButton>0</CharacterButton>
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton>&nbsp;</EntryButton>
+                    <CharacterButton>+</CharacterButton>
                 </section>
             </main>
         );

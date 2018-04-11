@@ -2,14 +2,19 @@ import * as React from "react";
 
 interface EntryButtonProps
 {
-    children: string;
-    callback: any;
+    children?: string;
+    callback?: any;
 }
 
 const EntryButton = (props: EntryButtonProps) =>
 {
+    const callback = typeof props.callback == "undefined"
+        ? () => {} : props.callback;
+    
+    const str = props.children || "";
+
     return (
-        <button onClick={props.callback}>{props.children}</button>
+        <button onClick={callback}>{str}</button>
     );
 }
 
