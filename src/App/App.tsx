@@ -33,6 +33,8 @@ class App extends React.Component<AppProps, AppState>
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClear = this.handleClear.bind(this);
+        this.handleBackspace = this.handleBackspace.bind(this);
     }
 
     handleButtonPushed(input: string)
@@ -53,6 +55,39 @@ class App extends React.Component<AppProps, AppState>
             // using dot syntax. 
             input: event.target.value 
         });
+    }
+
+    handleClear(event)
+    {
+        this.setState({
+            ...this.state,
+
+            input: "",
+            output: "= 0",
+            prevInput: ""
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleBackspace(event)
+    {
+        this.setState((prevState) =>
+        {
+            let newInput = "";
+
+            if (prevState.input.length > 0)
+            {
+                newInput = prevState.input.slice(0, prevState.input.length - 1);
+            }
+
+            return {
+                ...prevState,
+                input: newInput
+            };
+        });
+
+        this.userInput.current.focus();
     }
 
     handleSubmit(event)
@@ -116,8 +151,8 @@ class App extends React.Component<AppProps, AppState>
                 <section id="buttons">
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton>&nbsp;</EntryButton>
-                    <EntryButton>&larr;</EntryButton>
-                    <EntryButton>clear</EntryButton>
+                    <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
+                    <EntryButton callback={this.handleClear}>clr</EntryButton>
                     <CharacterButton>7</CharacterButton>
                     <CharacterButton>8</CharacterButton>
                     <CharacterButton>9</CharacterButton>
