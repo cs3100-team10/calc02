@@ -8,6 +8,7 @@ interface AppProps {}
 interface AppState
 {
     input: string;
+    output: string;
 }
 
 class App extends React.Component<AppProps, AppState>
@@ -20,7 +21,8 @@ class App extends React.Component<AppProps, AppState>
         super(props);
 
         this.state = {
-            input: ""
+            input: "",
+            output: "= 0"
         };
 
         this.userInput = React.createRef();
@@ -53,7 +55,6 @@ class App extends React.Component<AppProps, AppState>
 
     handleSubmit(event)
     {
-        event.preventDefault();
         let result;
 
         try
@@ -67,13 +68,20 @@ class App extends React.Component<AppProps, AppState>
             return;
         }
 
-        console.log(result);
+        this.setState({
+            ...this.state,
+
+            input: "",
+            output: `= ${result.toString()}`
+        });
+
+        event.preventDefault();
 
     }
 
     render()
     {
-        const CharacterButton = (props) =>
+        const CharacterButton = (props: {children: string}) =>
         {
 
             const callback = (event) =>
@@ -87,11 +95,12 @@ class App extends React.Component<AppProps, AppState>
         }
 
         return (
-            <main id="calculator">
+            <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} ref={this.userInput} />
+                    <div className="output">{this.state.output}</div>
                 </section>
-                <form action="" id="buttons">
+                <section id="buttons">
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton>&larr;</EntryButton>
@@ -112,8 +121,8 @@ class App extends React.Component<AppProps, AppState>
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton>+</CharacterButton>
-                </form>
-            </main>
+                </section>
+            </form>
         );
     }
 }
