@@ -1,4 +1,4 @@
-import { lex } from "./parser";
+import { lex, parse } from "./parser";
 
 describe("the lexer", () =>
 {
@@ -71,6 +71,62 @@ describe("the lexer", () =>
         expect(lex(`${randFloat.toString()} )`)).toEqual(false);
     });
 
+});
 
+describe("the parser", () =>
+{
+    it("evaluates a number", () =>
+    {
+        expect(parse("10")).toEqual(10);
+    });
 
+    it("evaluates a signed number", () =>
+    {
+        expect(parse("-10")).toEqual(-10);
+    });
+
+    it("evaluates binary addition", () =>
+    {
+        expect(parse("2 + 2")).toEqual(4);
+    });
+
+    it("evaluates binary subtraction", () =>
+    {
+        expect(parse("7 - 5")).toEqual(2);
+    });
+
+    it("evaluates binary multiplication", () =>
+    {
+        expect(parse("10 * 10")).toEqual(100);
+    });
+
+    it("evaluates binary division", () =>
+    {
+        expect(parse("20 / 4")).toEqual(5);
+    });
+
+    it("evaluates expressions in parentheses", () =>
+    {
+        expect(parse("( 15 )")).toEqual(15)
+    });
+
+    it("evaluates parentheses before multiplication/division", () =>
+    {
+        expect(parse("( 4 - 3 ) * 10")).toEqual(10);
+    });
+
+    it("evaluates multiplication/division before addition/subtraction", () =>
+    {
+        expect(parse("4 - 5 * 10")).toEqual(-46);
+    });
+
+    it("throws an error if lexer does not pass", () =>
+    {
+        expect(() => parse("abc")).toThrow();
+    });
+
+    it("throws an error on attempted division by zero", () =>
+    {
+        expect(() => parse("10 / 0")).toThrow();
+    });
 });
