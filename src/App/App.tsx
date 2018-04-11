@@ -76,7 +76,7 @@ class App extends React.Component<AppProps, AppState>
         });
 
         event.preventDefault();
-
+        this.userInput.current.focus();
     }
 
     render()
