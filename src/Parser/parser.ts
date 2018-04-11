@@ -3,27 +3,30 @@ import * as ohm from "ohm-js";
 const grammar = ohm.grammar(`
 
 Math {
+    Exp
+      = AddExp
 
-    Expression (an expression)
-        = Expression "+" Term
-        | Expression "-" Term
-        | Term
+    AddExp
+      = AddExp "+" MulExp  -- plus
+      | AddExp "-" MulExp  -- minus
+      | MulExp
 
-    Term (a term)
-        = Term "*" Factor
-        | Term "/" Factor
-        | Factor
+    MulExp
+      = MulExp "*" PriExp  -- times
+      | MulExp "/" PriExp  -- divide
+      | PriExp
+
+    PriExp
+      = "(" Exp ")"  -- paren
+      | "+" PriExp   -- pos
+      | "-" PriExp   -- neg
+      | number
     
-    Factor
-        = "(" Expression ")"
-        | "+" Factor
-        | "-" Factor
-        | number
- 
-    number (an integer or floating point number)
-        = digit* "." digit+     -- fract
-        | digit+                -- whole
-        }
+    number  (a number)
+      = digit* "." digit+  -- fract
+      | digit+             -- whole
+    
+}
 
 `);
 
