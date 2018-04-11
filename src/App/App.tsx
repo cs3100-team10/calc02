@@ -1,92 +1,180 @@
 import * as React from "react";
 import EntryButton from "./EntryButton";
 
+import { lex, parse } from "../Parser/parser";
+
 interface AppProps {}
 
 interface AppState
 {
     input: string;
+    output: string;
+    prevInput: string;
 }
 
 class App extends React.Component<AppProps, AppState>
 {
+
+    private userInput;
+
     constructor(props)
     {
         super(props);
 
         this.state = {
-            input: ""
+            input: "",
+            output: "= 0",
+            prevInput: ""
         };
+
+        this.userInput = React.createRef();
 
         // this avoids some weird JavaScript stuff with `this`
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClear = this.handleClear.bind(this);
+        this.handleBackspace = this.handleBackspace.bind(this);
     }
 
     handleButtonPushed(input: string)
     {
-        this.setState({
-            ...this.state, // this notation 
-            input: this.state.input + input
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: prevState.input + input
+            };
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleTyping()
+    {
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: this.userInput.current.value
+            };
         });
     }
 
-    handleTyping(event)
+    handleClear()
     {
+        this.setState((prevState) =>
+        {
+            return {
+                input: "",
+                output: "= 0",
+                prevInput: ""
+            }
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleBackspace()
+    {
+        this.setState((prevState) =>
+        {
+            let newInput = "";
+
+            if (prevState.input.length > 0)
+            {
+                newInput = prevState.input.slice(0, prevState.input.length - 1);
+            }
+
+            return {
+                ...prevState,
+                input: newInput
+            };
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleSubmit(event)
+    {
+        let result;
+
+        try
+        {
+            result = parse(this.state.input);
+        }
+
+        catch (err)
+        {
+            console.error(err.message);
+            return;
+        }
+
         this.setState({
             ...this.state,
 
-            // `event.target` refers to the HTML element that
-            // is the source of the event. We can access its attributes
-            // using dot syntax. 
-            input: event.target.value 
+            input: "",
+            output: `= ${result.toString()}`,
+
+            prevInput: this.state.input
         });
+
+        event.preventDefault();
+        this.userInput.current.focus();
     }
 
     render()
     {
-        // Eventually, we will have to replace this array
-        // with a better method of storing the buttons we will need to render
-        
-        let orderNumbers = ["^", "v", "<<", "clr", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", " ", "=", "+"];
-
-        //let row1 = [7, 8, 9]
-        //let row2 = [4, 5, 6]
-        //let row3 = [1, 2, 3]
-        //let row4 = [0]
-        
-        //let orderNumbers = [row1, row2, row3, row4]
-
-        // Look up the `map` method on arrays.
-        // Basically, for each nth item in the array, a function is called
-        // that transforms the nth element of a new array. The new array
-        // is then returned.
-        // In this case, we're creating an array of EntryButtons
-        let numbers = orderNumbers.map((num, i) =>
+        const CharacterButton = (props: {children: string}) =>
         {
+
             const callback = (event) =>
             {
                 event.preventDefault();
-                this.handleButtonPushed(num.toString())
+                this.handleButtonPushed(props.children);
             }
-            
-            return (
-                <EntryButton key={i}
-                callback={callback}>
-                    {num.toString()}
-                </EntryButton>
-            );
-        });
+
+            return <EntryButton callback={callback}>{props.children}</EntryButton>;
+        }
+
+        const inputAttrs = {
+            autoFocus: true,
+            type: "text",
+            value: this.state.input,
+            placeholder: this.state.prevInput,
+            onChange: this.handleTyping,
+            ref: this.userInput
+        };
 
         return (
-            <main id="calculator">
+            <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
-                    <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} />
+                    <input {...inputAttrs} />
+                    <div className="output">{this.state.output}</div>
                 </section>
                 <section id="buttons">
-                    {numbers}
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
+                    <EntryButton callback={this.handleClear}>clr</EntryButton>
+                    <CharacterButton>7</CharacterButton>
+                    <CharacterButton>8</CharacterButton>
+                    <CharacterButton>9</CharacterButton>
+                    <CharacterButton>/</CharacterButton>
+                    <CharacterButton>4</CharacterButton>
+                    <CharacterButton>5</CharacterButton>
+                    <CharacterButton>6</CharacterButton>
+                    <CharacterButton>*</CharacterButton>
+                    <CharacterButton>1</CharacterButton>
+                    <CharacterButton>2</CharacterButton>
+                    <CharacterButton>3</CharacterButton>
+                    <CharacterButton>-</CharacterButton>
+                    <CharacterButton>0</CharacterButton>
+                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
+                    <CharacterButton>+</CharacterButton>
                 </section>
-            </main>
+            </form>
         );
     }
 }
