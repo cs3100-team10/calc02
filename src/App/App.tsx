@@ -48,7 +48,7 @@ class App extends React.Component<AppProps, AppState>
         // Eventually, we will have to replace this array
         // with a better method of storing the buttons we will need to render
         
-        let orderNumbers = [" ", " ", "<<", "clr", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", " ", "=", "+"];
+        let orderNumbers = ["^", "v", "<<", "clr", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", " ", "=", "+"];
 
         //let row1 = [7, 8, 9]
         //let row2 = [4, 5, 6]
