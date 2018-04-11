@@ -39,38 +39,43 @@ class App extends React.Component<AppProps, AppState>
 
     handleButtonPushed(input: string)
     {
-        this.setState({
-            ...this.state, // this notation 
-            input: this.state.input + input
-        });
-    }
-
-    handleTyping(event)
-    {
-        this.setState({
-            ...this.state,
-
-            // `event.target` refers to the HTML element that
-            // is the source of the event. We can access its attributes
-            // using dot syntax. 
-            input: event.target.value 
-        });
-    }
-
-    handleClear(event)
-    {
-        this.setState({
-            ...this.state,
-
-            input: "",
-            output: "= 0",
-            prevInput: ""
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: prevState.input + input
+            };
         });
 
         this.userInput.current.focus();
     }
 
-    handleBackspace(event)
+    handleTyping()
+    {
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: this.userInput.current.value
+            };
+        });
+    }
+
+    handleClear()
+    {
+        this.setState((prevState) =>
+        {
+            return {
+                input: "",
+                output: "= 0",
+                prevInput: ""
+            }
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleBackspace()
     {
         this.setState((prevState) =>
         {
@@ -126,7 +131,6 @@ class App extends React.Component<AppProps, AppState>
             const callback = (event) =>
             {
                 event.preventDefault();
-                this.userInput.current.focus();
                 this.handleButtonPushed(props.children);
             }
 
