@@ -10,6 +10,9 @@ interface AppState
 
 class App extends React.Component<AppProps, AppState>
 {
+
+    private userInput;
+
     constructor(props)
     {
         super(props);
@@ -17,6 +20,8 @@ class App extends React.Component<AppProps, AppState>
         this.state = {
             input: ""
         };
+
+        this.userInput = React.createRef();
 
         // this avoids some weird JavaScript stuff with `this`
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
@@ -67,6 +72,7 @@ class App extends React.Component<AppProps, AppState>
             const callback = (event) =>
             {
                 event.preventDefault();
+                this.userInput.current.focus();
                 this.handleButtonPushed(num.toString())
             }
             
@@ -81,7 +87,7 @@ class App extends React.Component<AppProps, AppState>
         return (
             <main id="calculator">
                 <section id="input">
-                    <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} />
+                    <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} ref={this.userInput} />
                 </section>
                 <section id="buttons">
                     {numbers}
