@@ -11,7 +11,7 @@ const isDev = () =>
 
 const extractSass = new ExtractTextPlugin({
     filename: "style.css",
-    disable: !isDev()
+    disable: isDev()
 });
 
 const plugins = [
