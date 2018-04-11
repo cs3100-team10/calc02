@@ -5,10 +5,15 @@
  */
 class InputHistory
 {
-
+    memStorage: Array<string>;
+    pos: number;
+    size: number;
     constructor()
     {
-        
+        //array representing the memory
+        this.memStorage = [""];
+        this.pos = 0;
+        this.size = 1;
     }
 
     /**
@@ -19,7 +24,11 @@ class InputHistory
      */
     current(): string
     {
-        return ""; // this is a stub, rewrite
+        if (this.size == 0) {
+            return ""; // this is a stub, rewrite
+        } else {
+            return this.memStorage[this.pos];
+        }
     }
 
     /**
@@ -30,7 +39,9 @@ class InputHistory
      */
     push(item: string): void
     {
-        
+        this.memStorage[0] = item;
+        this.memStorage.unshift("");
+        this.size++;
     }
 
     /**
@@ -42,7 +53,9 @@ class InputHistory
      */
     back(): void
     {
-        
+        if (this.pos < this.size-1) {
+            this.pos++;  
+        }
     }
 
     /**
@@ -54,7 +67,9 @@ class InputHistory
      */
     forward(): void
     {
-        
+        if (this.pos > 0) {
+            this.pos--;  
+        }
     }
 }
 
