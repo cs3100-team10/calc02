@@ -1,9 +1,17 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const autoprefixer = require("autoprefixer");
+const webpack = require("webpack");
+
+const isDev = () =>
+{
+    return typeof process.env.NODE_ENV === "undefined"
+        || process.env.NODE_ENV !== "netlify";
+};
 
 let extractSass = new ExtractTextPlugin({
     filename: "style.css",
-    disable: typeof process.env.NODE_ENV === "undefined" || process.env.NODE_ENV.toLowerCase() === "development"
+    disable: !isDev()
 });
 
 // This is the main configuration object.
@@ -26,12 +34,6 @@ const config = {
                 use: "ts-loader"
             },
 
-            // This rule compiles our Ohm grammars
-            {
-                test: /.ohm$/,
-                use: "ohm-loader"
-            },
-
             // This rule compiles our Sass into CSS
             {
                 test: /.(scss|css)$/,
@@ -40,7 +42,17 @@ const config = {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                importLoaders: 2
+                            }
+                        },
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                sourceMap: true,
+                                plugins: [
+                                    autoprefixer({ grid: true })
+                                ]
                             }
                         },
                         {
@@ -57,18 +69,20 @@ const config = {
         ]
     },
     plugins: [
-        extractSass
+        extractSass,
+        isDev() ? new webpack.NamedModulesPlugin() : undefined
     ],
     resolve: {
-        extensions: [".ts", ".tsx", ".scss", ".css", ".js", ".ohm"]
+        extensions: [".ts", ".tsx", ".scss", ".css", ".js"]
     },
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         hot: true,
+        inline: true,
         port: 8000,
         overlay: true
     },
-    devtool: "source-map"
+    devtool: isDev() ? "eval-source-map" : false
 };
 
 module.exports = config;
