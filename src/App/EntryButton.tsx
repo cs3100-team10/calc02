@@ -4,6 +4,7 @@ interface EntryButtonProps
 {
     children?: string;
     callback?: any;
+    submit?: boolean;
 }
 
 const EntryButton = (props: EntryButtonProps) =>
@@ -13,8 +14,15 @@ const EntryButton = (props: EntryButtonProps) =>
     
     const str = props.children || "";
 
+    const submit = props.submit || false;
+
+    const attrs = {
+        onClick: callback,
+        type: submit ? "submit" : ""
+    };
+
     return (
-        <button onClick={callback}>{str}</button>
+        <button {...attrs}>{str}</button>
     );
 }
 

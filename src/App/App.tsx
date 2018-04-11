@@ -1,6 +1,8 @@
 import * as React from "react";
 import EntryButton from "./EntryButton";
 
+import { lex, parse } from "../Parser/parser";
+
 interface AppProps {}
 
 interface AppState
@@ -26,6 +28,7 @@ class App extends React.Component<AppProps, AppState>
         // this avoids some weird JavaScript stuff with `this`
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleButtonPushed(input: string)
@@ -48,6 +51,26 @@ class App extends React.Component<AppProps, AppState>
         });
     }
 
+    handleSubmit(event)
+    {
+        event.preventDefault();
+        let result;
+
+        try
+        {
+            result = parse(this.state.input);
+        }
+
+        catch (err)
+        {
+            console.error(err.message);
+            return;
+        }
+
+        console.log(result);
+
+    }
+
     render()
     {
         const CharacterButton = (props) =>
@@ -68,7 +91,7 @@ class App extends React.Component<AppProps, AppState>
                 <section id="input">
                     <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} ref={this.userInput} />
                 </section>
-                <section id="buttons">
+                <form action="" id="buttons">
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton>&nbsp;</EntryButton>
                     <EntryButton>&larr;</EntryButton>
@@ -87,9 +110,9 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton>-</CharacterButton>
                     <CharacterButton>0</CharacterButton>
                     <EntryButton>&nbsp;</EntryButton>
-                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton>+</CharacterButton>
-                </section>
+                </form>
             </main>
         );
     }
