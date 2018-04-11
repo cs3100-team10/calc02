@@ -9,10 +9,17 @@ const isDev = () =>
         || process.env.NODE_ENV !== "netlify";
 };
 
-let extractSass = new ExtractTextPlugin({
+const extractSass = new ExtractTextPlugin({
     filename: "style.css",
     disable: !isDev()
 });
+
+const plugins = [
+    extractSass
+];
+
+if (isDev())
+    plugins.push(new webpack.NamedModulesPlugin());
 
 // This is the main configuration object.
 const config = {
@@ -68,10 +75,7 @@ const config = {
             }
         ]
     },
-    plugins: [
-        extractSass,
-        isDev() ? new webpack.NamedModulesPlugin() : undefined
-    ],
+    plugins: plugins,
     resolve: {
         extensions: [".ts", ".tsx", ".scss", ".css", ".js"]
     },
