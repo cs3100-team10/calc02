@@ -18,7 +18,7 @@ const EntryButton = (props: EntryButtonProps) =>
 
     const attrs = {
         onClick: callback,
-        type: submit ? "submit" : undefined
+        type: submit ? "submit" : "button"
     };
 
     return (
