@@ -9,6 +9,7 @@ interface AppState
 {
     input: string;
     output: string;
+    prevInput: string;
 }
 
 class App extends React.Component<AppProps, AppState>
@@ -22,7 +23,8 @@ class App extends React.Component<AppProps, AppState>
 
         this.state = {
             input: "",
-            output: "= 0"
+            output: "= 0",
+            prevInput: ""
         };
 
         this.userInput = React.createRef();
@@ -72,7 +74,9 @@ class App extends React.Component<AppProps, AppState>
             ...this.state,
 
             input: "",
-            output: `= ${result.toString()}`
+            output: `= ${result.toString()}`,
+
+            prevInput: this.state.input
         });
 
         event.preventDefault();
@@ -91,13 +95,22 @@ class App extends React.Component<AppProps, AppState>
                 this.handleButtonPushed(props.children);
             }
 
-            return <EntryButton callback={callback}>{props.children}</EntryButton>
+            return <EntryButton callback={callback}>{props.children}</EntryButton>;
         }
+
+        const inputAttrs = {
+            autoFocus: true,
+            type: "text",
+            value: this.state.input,
+            placeholder: this.state.prevInput,
+            onChange: this.handleTyping,
+            ref: this.userInput
+        };
 
         return (
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
-                    <input autoFocus type="text" value={this.state.input} onChange={this.handleTyping} ref={this.userInput} />
+                    <input {...inputAttrs} />
                     <div className="output">{this.state.output}</div>
                 </section>
                 <section id="buttons">
