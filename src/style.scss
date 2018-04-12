@@ -16,11 +16,33 @@
 
 #input
 {
+    position: relative;
+
     input[type="text"]
     {
         display: block;
         width: 100%;
         text-align: right;
+    }
+
+    .lex-status
+    {
+        position: absolute;
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        top: 8px;
+        left: 6px;
+
+        &.pass
+        {
+            background: green;
+        }
+
+        &.fail
+        {
+            background: red;
+        }
     }
 }
 
@@ -37,7 +59,7 @@ button
     margin: 0.5rem 0 0;
 }
 
-.output
+#output
 {
     text-align: right;
 }

@@ -10,6 +10,7 @@ interface AppState
     input: string;
     output: string;
     prevInput: string;
+    lex: boolean;
 }
 
 class App extends React.Component<AppProps, AppState>
@@ -24,7 +25,8 @@ class App extends React.Component<AppProps, AppState>
         this.state = {
             input: "",
             output: "= 0",
-            prevInput: ""
+            prevInput: "",
+            lex: false
         };
 
         this.userInput = React.createRef();
@@ -56,7 +58,8 @@ class App extends React.Component<AppProps, AppState>
         {
             return {
                 ...prevState,
-                input: this.userInput.current.value
+                input: this.userInput.current.value,
+                lex: lex(this.userInput.current.value)
             };
         });
     }
@@ -107,16 +110,20 @@ class App extends React.Component<AppProps, AppState>
         catch (err)
         {
             console.error(err.message);
+            event.preventDefault();
             return;
         }
 
-        this.setState({
-            ...this.state,
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
 
-            input: "",
-            output: `= ${result.toString()}`,
-
-            prevInput: this.state.input
+                input: "",
+                output: `= ${result.toString()}`,
+                prevInput: prevState.input,
+                lex: false
+            };
         });
 
         event.preventDefault();
@@ -146,11 +153,19 @@ class App extends React.Component<AppProps, AppState>
             ref: this.userInput
         };
 
+        const lexStatusClasses = [
+            "lex-status",
+            this.state.lex ? "pass" : "fail"
+        ].join(" ");
+
         return (
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input {...inputAttrs} />
-                    <div className="output">{this.state.output}</div>
+                    <div className={lexStatusClasses}></div>
+                </section>
+                <section id="output">
+                    {this.state.output}
                 </section>
                 <section id="buttons">
                     <EntryButton>&#x025B3;</EntryButton>
