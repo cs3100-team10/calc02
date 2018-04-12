@@ -153,8 +153,8 @@ class App extends React.Component<AppProps, AppState>
                     <div className="output">{this.state.output}</div>
                 </section>
                 <section id="buttons">
-                    <EntryButton>&nbsp;</EntryButton>
-                    <EntryButton>&nbsp;</EntryButton>
+                    <EntryButton>&#x025B3;</EntryButton>
+                    <EntryButton>&#x025BD;</EntryButton>
                     <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton callback={this.handleClear}>clr</EntryButton>
                     <CharacterButton>7</CharacterButton>
