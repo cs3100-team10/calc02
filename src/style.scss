@@ -5,6 +5,15 @@
     box-sizing: border-box;
 }
 
+#calculator{
+    width: 100%;
+    position: relative;
+    max-width: 85%;
+    //border: 2px solid;
+    //padding: 20px;
+    resize: both;
+    overflow: auto;
+}
 
 #render
 {
@@ -17,6 +26,9 @@
 #input
 {
     position: relative;
+    margin: auto;
+    max-width: 400px;
+    width: 99%;
 
     input[type="text"]
     {
@@ -51,12 +63,19 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: stretch;
+    min-height: 100px;
+    height: 85%;
 }
 
 button
 {
     width: 23%;
-    margin: 0.5rem 0 0;
+    margin: 2px;
+    padding: 0px 7px;
+    flex-grow: 1;
+    background-color: transparent;
+    border: 1px solid black;
 }
 
 #output
