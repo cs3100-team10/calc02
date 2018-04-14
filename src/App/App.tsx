@@ -168,8 +168,11 @@ class App extends React.Component<AppProps, AppState>
                     {this.state.output}
                 </section>
                 <section id="buttons">
-                    <EntryButton>&#x025B3;</EntryButton>
-                    <EntryButton>&#x025BD;</EntryButton>
+                    <div className="blank"></div>
+                    <div className="memory">
+                        <EntryButton>&#x025B3;</EntryButton>
+                        <EntryButton>&#x025BD;</EntryButton>
+                    </div>
                     <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton callback={this.handleClear}>clr</EntryButton>
                     <CharacterButton>7</CharacterButton>
@@ -185,9 +188,10 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton>3</CharacterButton>
                     <CharacterButton>-</CharacterButton>
                     <CharacterButton>0</CharacterButton>
-                    <EntryButton>&nbsp;</EntryButton>
+                    <div className="blank"></div>
                     <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton>+</CharacterButton>
+                    
                 </section>
             </form>
         );
