@@ -45,7 +45,8 @@ class App extends React.Component<AppProps, AppState>
         {
             return {
                 ...prevState,
-                input: prevState.input + input
+                input: prevState.input + input,
+                lex: lex(prevState.input + input)
             };
         });
 
@@ -132,7 +133,7 @@ class App extends React.Component<AppProps, AppState>
 
     render()
     {
-        const CharacterButton = (props: {children: string}) =>
+        const CharacterButton = (props: {children: string, className?: string}) =>
         {
 
             const callback = (event) =>
@@ -141,7 +142,7 @@ class App extends React.Component<AppProps, AppState>
                 this.handleButtonPushed(props.children);
             }
 
-            return <EntryButton callback={callback}>{props.children}</EntryButton>;
+            return <EntryButton callback={callback} className={props.className}>{props.children}</EntryButton>;
         }
 
         const inputAttrs = {
@@ -150,7 +151,8 @@ class App extends React.Component<AppProps, AppState>
             value: this.state.input,
             placeholder: this.state.prevInput,
             onChange: this.handleTyping,
-            ref: this.userInput
+            ref: this.userInput,
+            className: this.state.lex ? "pass" : "fail"
         };
 
         const lexStatusClasses = [
@@ -162,35 +164,37 @@ class App extends React.Component<AppProps, AppState>
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input {...inputAttrs} />
-                    <div className={lexStatusClasses}></div>
                 </section>
                 <section id="output">
                     {this.state.output}
                 </section>
                 <section id="buttons">
-                    <div className="blank"></div>
                     <div className="memory">
-                        <EntryButton>&#x025B3;</EntryButton>
-                        <EntryButton>&#x025BD;</EntryButton>
+                        <EntryButton className="action">&#x025B3;</EntryButton>
+                        <EntryButton className="action">&#x025BD;</EntryButton>
                     </div>
-                    <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
-                    <EntryButton callback={this.handleClear}>clr</EntryButton>
-                    <CharacterButton>7</CharacterButton>
-                    <CharacterButton>8</CharacterButton>
-                    <CharacterButton>9</CharacterButton>
-                    <CharacterButton>/</CharacterButton>
-                    <CharacterButton>4</CharacterButton>
-                    <CharacterButton>5</CharacterButton>
-                    <CharacterButton>6</CharacterButton>
-                    <CharacterButton>*</CharacterButton>
-                    <CharacterButton>1</CharacterButton>
-                    <CharacterButton>2</CharacterButton>
-                    <CharacterButton>3</CharacterButton>
-                    <CharacterButton>-</CharacterButton>
-                    <CharacterButton>0</CharacterButton>
-                    <div className="blank"></div>
-                    <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
-                    <CharacterButton>+</CharacterButton>
+                    <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
+                    <EntryButton className="action" callback={this.handleClear}>C</EntryButton>
+                    <div className="parens">
+                        <CharacterButton className="operation">(</CharacterButton>
+                        <CharacterButton className="operation">)</CharacterButton>
+                    </div>
+                    <CharacterButton className="number">7</CharacterButton>
+                    <CharacterButton className="number">8</CharacterButton>
+                    <CharacterButton className="number">9</CharacterButton>
+                    <CharacterButton className="operation">/</CharacterButton>
+                    <CharacterButton className="number">4</CharacterButton>
+                    <CharacterButton className="number">5</CharacterButton>
+                    <CharacterButton className="number">6</CharacterButton>
+                    <CharacterButton className="operation">*</CharacterButton>
+                    <CharacterButton className="number">1</CharacterButton>
+                    <CharacterButton className="number">2</CharacterButton>
+                    <CharacterButton className="number">3</CharacterButton>
+                    <CharacterButton className="operation">-</CharacterButton>
+                    <CharacterButton className="number">0</CharacterButton>
+                    <CharacterButton className="number">.</CharacterButton>
+                    <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
+                    <CharacterButton className="operation">+</CharacterButton>
                     
                 </section>
             </form>
