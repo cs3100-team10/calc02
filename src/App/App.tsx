@@ -185,7 +185,7 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton>3</CharacterButton>
                     <CharacterButton>-</CharacterButton>
                     <CharacterButton>0</CharacterButton>
-                    <EntryButton>&nbsp;</EntryButton>
+                    <CharacterButton>.</CharacterButton>                    
                     <EntryButton callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton>+</CharacterButton>
                 </section>
