@@ -5,13 +5,47 @@
     box-sizing: border-box;
 }
 
-
 #render
 {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    /*
+    .background-color
+    {
+        &.red
+        {
+            background: red;
+        }
+        &.orange
+        {
+            background: orange;
+        }
+        &.yellow
+        {
+            background: yellow;
+        }
+        &.green
+        {
+            background: green;
+        }
+        &.blue
+        {
+            background: blue;
+        }
+        &.purple
+        {
+            background: purple;
+        }
+        &.pink
+        {
+            background: pink;
+        }
+    }
+    */
+   
 }
 
 #input
@@ -57,6 +91,72 @@ button
 {
     width: 23%;
     margin: 0.5rem 0 0;
+
+    /*.text-color
+    {
+        &.red
+        {
+            color: red;
+        }
+        &.orange
+        {
+            color: orange;
+        }
+        &.yellow
+        {
+            color: yellow;
+        }
+        &.green
+        {
+            color: green;
+        }
+        &.blue
+        {
+            color: blue;
+        }
+        &.purple
+        {
+            color: purple;
+        }
+        &.pink
+        {
+            color: pink;
+        }
+    }*/
+
+     /*
+    .button-color
+    {
+        &.red
+        {
+            background: red;
+        }
+        &.orange
+        {
+            background: orange;
+        }
+        &.yellow
+        {
+            background: yellow;
+        }
+        &.green
+        {
+            background: green;
+        }
+        &.blue
+        {
+            background: blue;
+        }
+        &.purple
+        {
+            background: purple;
+        }
+        &.pink
+        {
+            background: pink;
+        }
+    }
+    */
 }
 
 #output
