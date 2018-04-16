@@ -155,7 +155,10 @@ class App extends React.Component<AppProps, AppState>
         {
             try
             {
-                result = parse(this.state.prevInput + this.state.input);
+                if(this.state.prevInput == '')
+                    result = parse("0" + this.state.input);
+                else
+                    result = parse(this.state.prevInput + this.state.input);
             }
     
             catch (err)
