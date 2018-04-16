@@ -150,18 +150,36 @@ class App extends React.Component<AppProps, AppState>
     handleSubmit(event)
     {
         let result;
-
-        try
+        //let opList = ["*", "/", "+", "-"]; //Might be a cleaner way to do this
+        if(this.state.input.startsWith("*") || this.state.input.startsWith("/") || this.state.input.startsWith("-") || this.state.input.startsWith("+"))
         {
-            result = parse(this.state.input);
+            try
+            {
+                result = parse(this.state.prevInput + this.state.input);
+            }
+    
+            catch (err)
+            {
+                console.error(err.message);
+                event.preventDefault();
+                return;
+            } 
         }
-
-        catch (err)
+        else
         {
-            console.error(err.message);
-            event.preventDefault();
-            return;
-        }
+            try
+            {
+                result = parse(this.state.input);
+            }
+    
+            catch (err)
+            {
+                console.error(err.message);
+                event.preventDefault();
+                return;
+            }
+        }    
+        
 
         this.setState((prevState) =>
         {
@@ -173,7 +191,7 @@ class App extends React.Component<AppProps, AppState>
 
                 input: "",
                 output: `= ${result.toString()}`,
-                prevInput: prevState.input,
+                prevInput: result.toString(),
                 lex: false
             };
         
