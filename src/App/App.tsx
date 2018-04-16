@@ -2,6 +2,7 @@ import * as React from "react";
 import EntryButton from "./EntryButton";
 
 import { lex, parse } from "../Parser/parser";
+import InputHistory from "../InputHistory/InputHistory";
 
 interface AppProps {}
 
@@ -17,10 +18,15 @@ class App extends React.Component<AppProps, AppState>
 {
 
     private userInput;
-
+    //memory
+    memory : InputHistory;
+    
     constructor(props)
     {
         super(props);
+
+        //memory
+        this.memory = new InputHistory;
 
         this.state = {
             input: "",
@@ -37,10 +43,15 @@ class App extends React.Component<AppProps, AppState>
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleBackspace = this.handleBackspace.bind(this);
+        this.handleMemoryUp = this.handleMemoryUp.bind(this);
+        this.handleMemoryBack = this.handleMemoryBack.bind(this);
+
     }
 
     handleButtonPushed(input: string)
     {
+        this.memory.begin();
+        
         this.setState((prevState) =>
         {
             return {
@@ -54,6 +65,8 @@ class App extends React.Component<AppProps, AppState>
 
     handleTyping()
     {
+        this.memory.begin();
+
         this.setState((prevState) =>
         {
             return {
@@ -73,6 +86,42 @@ class App extends React.Component<AppProps, AppState>
                 output: "= 0",
                 prevInput: ""
             }
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleMemoryUp()
+    {
+        this.setState((prevState) =>
+        {
+      
+            this.memory.back();
+            let newInput = this.memory.current();
+
+            return {
+                input: newInput,
+                output: "=0",
+                prevInput: ""
+            };
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleMemoryBack()
+    {
+        this.setState((prevState) =>
+        {
+      
+            this.memory.forward();
+            let newInput = this.memory.current();
+
+            return {
+                input: newInput,
+                output: "=0",
+                prevInput: ""
+            };
         });
 
         this.userInput.current.focus();
@@ -116,6 +165,9 @@ class App extends React.Component<AppProps, AppState>
 
         this.setState((prevState) =>
         {
+        
+            this.memory.push(`${result.toString()}`);
+
             return {
                 ...prevState,
 
@@ -124,8 +176,9 @@ class App extends React.Component<AppProps, AppState>
                 prevInput: prevState.input,
                 lex: false
             };
+        
         });
-
+      
         event.preventDefault();
         this.userInput.current.focus();
     }
@@ -168,8 +221,8 @@ class App extends React.Component<AppProps, AppState>
                     {this.state.output}
                 </section>
                 <section id="buttons">
-                    <EntryButton>&#x025B3;</EntryButton>
-                    <EntryButton>&#x025BD;</EntryButton>
+                    <EntryButton callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
+                    <EntryButton callback={this.handleMemoryBack}>&#x025BD;</EntryButton>
                     <EntryButton callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton callback={this.handleClear}>clr</EntryButton>
                     <CharacterButton>7</CharacterButton>
