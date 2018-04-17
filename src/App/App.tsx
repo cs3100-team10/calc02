@@ -2,6 +2,7 @@ import * as React from "react";
 import EntryButton from "./EntryButton";
 
 import { lex, parse } from "../Parser/parser";
+import InputHistory from "../InputHistory/InputHistory";
 
 interface AppProps {}
 
@@ -17,10 +18,15 @@ class App extends React.Component<AppProps, AppState>
 {
 
     private userInput;
-
+    //memory
+    memory : InputHistory;
+    
     constructor(props)
     {
         super(props);
+
+        //memory
+        this.memory = new InputHistory;
 
         this.state = {
             input: "",
@@ -37,10 +43,15 @@ class App extends React.Component<AppProps, AppState>
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleBackspace = this.handleBackspace.bind(this);
+        this.handleMemoryUp = this.handleMemoryUp.bind(this);
+        this.handleMemoryBack = this.handleMemoryBack.bind(this);
+
     }
 
     handleButtonPushed(input: string)
     {
+        this.memory.begin();
+        
         this.setState((prevState) =>
         {
             return {
@@ -55,6 +66,8 @@ class App extends React.Component<AppProps, AppState>
 
     handleTyping()
     {
+        this.memory.begin();
+
         this.setState((prevState) =>
         {
             return {
@@ -74,6 +87,42 @@ class App extends React.Component<AppProps, AppState>
                 output: "= 0",
                 prevInput: ""
             }
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleMemoryUp()
+    {
+        this.setState((prevState) =>
+        {
+      
+            this.memory.back();
+            let newInput = this.memory.current();
+
+            return {
+                input: newInput,
+                output: "=0",
+                prevInput: ""
+            };
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleMemoryBack()
+    {
+        this.setState((prevState) =>
+        {
+      
+            this.memory.forward();
+            let newInput = this.memory.current();
+
+            return {
+                input: newInput,
+                output: "=0",
+                prevInput: ""
+            };
         });
 
         this.userInput.current.focus();
@@ -102,31 +151,56 @@ class App extends React.Component<AppProps, AppState>
     handleSubmit(event)
     {
         let result;
-
-        try
+        //let opList = ["*", "/", "+", "-"]; //Might be a cleaner way to do this
+        if(this.state.input.startsWith("*") || this.state.input.startsWith("/") || this.state.input.startsWith("-") || this.state.input.startsWith("+"))
         {
-            result = parse(this.state.input);
+            try
+            {
+                if(this.state.prevInput == '')
+                    result = parse("0" + this.state.input);
+                else
+                    result = parse(this.state.prevInput + this.state.input);
+            }
+    
+            catch (err)
+            {
+                console.error(err.message);
+                event.preventDefault();
+                return;
+            } 
         }
-
-        catch (err)
+        else
         {
-            console.error(err.message);
-            event.preventDefault();
-            return;
-        }
+            try
+            {
+                result = parse(this.state.input);
+            }
+    
+            catch (err)
+            {
+                console.error(err.message);
+                event.preventDefault();
+                return;
+            }
+        }    
+        
 
         this.setState((prevState) =>
         {
+        
+            this.memory.push(`${result.toString()}`);
+
             return {
                 ...prevState,
 
                 input: "",
                 output: `= ${result.toString()}`,
-                prevInput: prevState.input,
+                prevInput: result.toString(),
                 lex: false
             };
+        
         });
-
+      
         event.preventDefault();
         this.userInput.current.focus();
     }
@@ -170,8 +244,8 @@ class App extends React.Component<AppProps, AppState>
                 </section>
                 <section id="buttons">
                     <div className="memory">
-                        <EntryButton className="action">&#x025B3;</EntryButton>
-                        <EntryButton className="action">&#x025BD;</EntryButton>
+                        <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
+                        <EntryButton className="action" callback={this.handleMemoryBack}>&#x025BD;</EntryButton>
                     </div>
                     <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton className="action" callback={this.handleClear}>C</EntryButton>

@@ -71,6 +71,17 @@ class InputHistory
             this.pos--;  
         }
     }
+
+    /**
+     * Resets location in memory to the start.
+     * 
+     * This method does not have any side effects. If the user wishes to return
+     * the new current value, they should call the current() method.
+     */
+    begin(): void
+    {
+        this.pos = 0;  
+    }
 }
 
 export default InputHistory;
