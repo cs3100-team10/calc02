@@ -235,6 +235,7 @@ class App extends React.Component<AppProps, AppState>
         ].join(" ");
 
         return (
+            <div id="theme" className="day"><div id="root">
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input {...inputAttrs} />
@@ -272,6 +273,7 @@ class App extends React.Component<AppProps, AppState>
                     
                 </section>
             </form>
+            </div></div>
         );
     }
 }

@@ -1,33 +1,16 @@
 @import "~reset-css/reset";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$dracula-orchid: #2d3436;
-$electron-blue: #0984e3;
-$city-lights: #dfe6e9;
-$robins-egg: #00cec9;
-$exodus-fruit: #6c5ce7;
-$soothing-breeze: #b2bec3;
-$american-river: #636e72;
-$shy-moment: #a29bfe;
-$darner-tail: #74b9ff;
-
-$chi-gong: #d63031;
-$mint-leaf: #00b894;
+@import "partials/colors";
 
 *
 {
     box-sizing: border-box;
 }
 
-body
-{
-    font-family: "Open Sans", sans-serif;
-    background: $dracula-orchid;
-    color: $city-lights;
-}
-
 :root
 {
+    font-family: "Open Sans", sans-serif;
     font-size: 0.8em;
 
     @media only screen and (min-width: 321px)
@@ -36,15 +19,15 @@ body
     }
 }
 
-
-
-#render
+#root
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-   
+    min-height: 100vh;
+
+    @include theme-apply(background, background);
+    @include theme-apply(color, foreground);
 }
 
 #calculator
@@ -74,22 +57,23 @@ body
         font-family: "Open Sans", sans-serif;
         text-align: right;
         outline: 0;
-        background: $american-river;
-        color: $city-lights;
+
+        @include theme-apply(background, background-input);
+        @include theme-apply(color, foreground);
 
         &::placeholder
         {
-            color: $soothing-breeze;
+            @include theme-apply(color, placeholder);
         }
 
         &.pass
         {
-            border-left-color: $mint-leaf;
+            @include theme-apply(border-left-color, success)
         }
 
         &.fail
         {
-            border-left-color: $chi-gong;
+            @include theme-apply(border-left-color, fail);
         }
     }
 
@@ -187,35 +171,35 @@ button
 
     &.number
     {
-        background: $soothing-breeze;
-        color: $dracula-orchid;
+        @include theme-apply(background, btn-number);
+        @include theme-apply(color, btn-text-inverted);
 
-        &:hover
-        {
-            background: lighten($soothing-breeze, 12%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($soothing-breeze, 12%);
+        // }
     }
 
     &.operation
     {
-        background: $electron-blue;
-        color: $city-lights;
+        @include theme-apply(background, btn-operation);
+        @include theme-apply(color, btn-text);
 
-        &:hover
-        {
-            background: lighten($electron-blue, 8%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($electron-blue, 8%);
+        // }
     }
 
     &.action
     {
-        background: $exodus-fruit;
-        color: $city-lights;
+        @include theme-apply(background, btn-action);
+        @include theme-apply(color, btn-text);
 
-        &:hover
-        {
-            background: lighten($exodus-fruit, 6%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($exodus-fruit, 6%);
+        // }
     }
 
     &:hover
