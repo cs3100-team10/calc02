@@ -22,10 +22,21 @@ $mint-leaf: #00b894;
 body
 {
     font-family: "Open Sans", sans-serif;
-
     background: $dracula-orchid;
     color: $city-lights;
 }
+
+:root
+{
+    font-size: 0.8em;
+
+    @media only screen and (min-width: 321px)
+    {
+        font-size: 1em;
+    }
+}
+
+
 
 #render
 {
@@ -40,9 +51,9 @@ body
 {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    width: 95%;
-    max-width: 20rem;
+    width: 100%;
+    margin: 0 2px;
+    max-width: 320px;
 }
 
 #input
@@ -101,13 +112,22 @@ body
 #buttons
 {
     display: grid;
-    grid-template-columns: repeat(4, calc(5rem - 1.5px));
-    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, calc(25vw - 2.5px));
     grid-gap: 2px;
+
+    @media only screen and (min-width: 321px)
+    {
+        grid-template-columns: repeat(4, calc(5rem - 2px));
+    }
 
     > button
     {
-        height: calc(5rem - 1.5px);
+        height: calc(25vw - 2.5px);
+
+        @media only screen and (min-width: 321px)
+        {
+            height: calc(5rem - 2px);
+        }
     }
 
     .memory
@@ -118,7 +138,12 @@ body
 
         > button
         {
-            height: calc(50% - 1px);
+            height: calc(12.5vw - 2.2px);
+
+            @media only screen and (min-width: 321px)
+            {
+                height: calc(50% - 1px);
+            }
         }
     }
 
@@ -130,8 +155,12 @@ body
 
         > button
         {
-            height: 100%;
-            width: calc(50% - 1px);
+            width: calc(12.5vw - 2.2px);
+
+            @media only screen and (min-width: 321px)
+            {
+                width: calc(50% - 1px);
+            }
         }
     }
 
