@@ -194,3 +194,8 @@ button
         cursor: pointer;
     }
 }
+
+@-ms-viewport
+{
+    width: device-width;
+}
