@@ -43,7 +43,7 @@ body
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
    
 }
 
@@ -59,7 +59,8 @@ body
 #input
 {
     margin-bottom: 2px;
-    position: relative;
+    position: sticky;
+    top: 0;
 
     input[type="text"]
     {
