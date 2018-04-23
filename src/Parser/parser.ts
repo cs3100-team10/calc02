@@ -1,5 +1,10 @@
 import * as ohm from "ohm-js";
 
+const constants = new Map<string, number>([
+    [ "pi", Math.PI ],
+    [ String.fromCharCode(0x03C0), Math.PI ]
+]);
+
 const grammar = ohm.grammar(`
 
 Math {
@@ -12,19 +17,28 @@ Math {
       | MulExp
 
     MulExp
-      = MulExp "*" PriExp  -- times
-      | MulExp "/" PriExp  -- divide
+      = MulExp "*" ExpExp  -- times
+      | MulExp "%" ExpExp  -- mod
+      | MulExp "/" ExpExp  -- divide
+      | ExpExp
+    
+    ExpExp
+      = PriExp "^" ExpExp  -- power
       | PriExp
 
     PriExp
       = "(" Exp ")"  -- paren
       | "+" PriExp   -- pos
       | "-" PriExp   -- neg
+      | ident
       | number
     
     number  (a number)
       = digit* "." digit+  -- fract
       | digit+             -- whole
+    
+    ident (an identifier)
+      = letter alnum*
     
 }
 
@@ -72,6 +86,24 @@ semantics.addOperation("evaluate", {
         return lhs.evaluate() / rhs.evaluate();    
     },
 
+    MulExp_mod(lhs, _, rhs)
+    {
+        if (rhs.evaluate() == 0)
+            throw new Error("Division by zero");
+        
+        return lhs.evaluate() % rhs.evaluate();
+    },
+
+    ExpExp(exp)
+    {
+        return exp.evaluate();
+    },
+
+    ExpExp_power(lhs, _, rhs)
+    {
+        return Math.pow(lhs.evaluate(), rhs.evaluate());
+    },
+
     PriExp(exp)
     {
         return exp.evaluate();
@@ -95,6 +127,11 @@ semantics.addOperation("evaluate", {
     number(_)
     {
         return parseFloat(this.sourceString);
+    },
+
+    ident(_l, _r)
+    {
+        return constants.get(this.sourceString.toLowerCase()) || 0;
     }
 });
 
