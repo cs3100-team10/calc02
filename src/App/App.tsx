@@ -249,6 +249,10 @@ class App extends React.Component<AppProps, AppState>
                     </div>
                     <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton className="action" callback={this.handleClear}>C</EntryButton>
+                    <CharacterButton className="action">Ans</CharacterButton>
+                    <CharacterButton className="operation">&pi;</CharacterButton>
+                    <CharacterButton className="operation">%</CharacterButton>
+                    <CharacterButton className="operation">^</CharacterButton>
                     <div className="parens">
                         <CharacterButton className="operation">(</CharacterButton>
                         <CharacterButton className="operation">)</CharacterButton>
