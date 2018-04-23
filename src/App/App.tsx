@@ -39,6 +39,7 @@ class App extends React.Component<AppProps, AppState>
 
         // this avoids some weird JavaScript stuff with `this`
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
+        this.handleAns = this.handleAns.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
@@ -58,6 +59,22 @@ class App extends React.Component<AppProps, AppState>
                 ...prevState,
                 input: prevState.input + input,
                 lex: lex(prevState.input + input)
+            };
+        });
+
+        this.userInput.current.focus();
+    }
+
+    handleAns()
+    {
+        this.memory.begin();
+
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: prevState.input + this.state.prevInput,
+                lex: lex(prevState.input + this.state.prevInput)
             };
         });
 
@@ -249,7 +266,7 @@ class App extends React.Component<AppProps, AppState>
                     </div>
                     <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton className="action" callback={this.handleClear}>C</EntryButton>
-                    <CharacterButton className="action">Ans</CharacterButton>
+                    <EntryButton className="action" callback={this.handleAns}>Ans</EntryButton>
                     <CharacterButton className="operation">&pi;</CharacterButton>
                     <CharacterButton className="operation">%</CharacterButton>
                     <CharacterButton className="operation">^</CharacterButton>
