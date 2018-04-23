@@ -39,6 +39,7 @@ class App extends React.Component<AppProps, AppState>
 
         // this avoids some weird JavaScript stuff with `this`
         this.handleButtonPushed = this.handleButtonPushed.bind(this);
+        this.handleAns = this.handleAns.bind(this);
         this.handleTyping = this.handleTyping.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
@@ -60,6 +61,68 @@ class App extends React.Component<AppProps, AppState>
                 lex: lex(prevState.input + input)
             };
         });
+    }
+   
+    handleOp(input: string)
+    {
+        this.memory.begin();
+
+        this.setState((prevState) =>
+        {
+            if(this.state.input == '')
+            {
+                if(this.state.prevInput == '' && input != '-')
+                {
+                    return {
+                        ...prevState,
+                        input: '0' + input,
+                        lex: lex('0' + input)
+                    };
+                }
+                else if(this.state.prevInput == '' && input == '-')
+                {
+                    return {
+                        ...prevState,
+                        input: prevState.input + input,
+                        lex: lex(prevState.input + input)
+                    };
+                }
+                else
+                {
+                    return {
+                        ...prevState,
+                        input: this.state.prevInput + input,
+                        lex: lex(this.state.prevInput + input)
+                    };
+                }
+                
+            }
+            else
+            {
+                return {
+                    ...prevState,
+                    input: prevState.input + input,
+                    lex: lex(prevState.input + input)
+                };
+            }
+        });
+
+        this.userInput.current.focus();
+    }
+    handleAns()
+    {
+        this.memory.begin();
+
+        this.setState((prevState) =>
+        {
+            return {
+                ...prevState,
+                input: prevState.input + this.state.prevInput,
+                lex: lex(prevState.input + this.state.prevInput)
+            };
+        });
+
+        this.userInput.current.focus();
     }
 
     handleTyping()
@@ -141,38 +204,17 @@ class App extends React.Component<AppProps, AppState>
     handleSubmit(event)
     {
         let result;
-        //let opList = ["*", "/", "+", "-"]; //Might be a cleaner way to do this
-        if(this.state.input.startsWith("*") || this.state.input.startsWith("/") || this.state.input.startsWith("-") || this.state.input.startsWith("+"))
+        try
         {
-            try
-            {
-                if(this.state.prevInput == '')
-                    result = parse("0" + this.state.input);
-                else
-                    result = parse(this.state.prevInput + this.state.input);
-            }
-    
-            catch (err)
-            {
-                console.error(err.message);
-                event.preventDefault();
-                return;
-            } 
+            result = parse(this.state.input);
         }
-        else
-        {
-            try
-            {
-                result = parse(this.state.input);
-            }
     
-            catch (err)
-            {
-                console.error(err.message);
-                event.preventDefault();
-                return;
-            }
-        }    
+        catch (err)
+        {
+            console.error(err.message);
+            event.preventDefault();
+            return;
+        }
         
 
         this.setState((prevState) =>
@@ -208,6 +250,18 @@ class App extends React.Component<AppProps, AppState>
             return <EntryButton callback={callback} className={props.className}>{props.children}</EntryButton>;
         }
 
+        const OpButton = (props: {children: string, className?: string}) =>
+        {
+
+            const callback = (event) =>
+            {
+                event.preventDefault();
+                this.handleOp(props.children);
+            }
+
+            return <EntryButton callback={callback} className={props.className}>{props.children}</EntryButton>;
+        }
+
         const inputAttrs = {
             autoFocus: true,
             type: "text",
@@ -238,6 +292,10 @@ class App extends React.Component<AppProps, AppState>
                     </div>
                     <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
                     <EntryButton className="action" callback={this.handleClear}>C</EntryButton>
+                    <EntryButton className="action" callback={this.handleAns}>Ans</EntryButton>
+                    <CharacterButton className="operation">&pi;</CharacterButton>
+                    <OpButton className="operation">%</OpButton>
+                    <OpButton className="operation">^</OpButton>
                     <div className="parens">
                         <CharacterButton className="operation">(</CharacterButton>
                         <CharacterButton className="operation">)</CharacterButton>
@@ -245,19 +303,19 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton className="number">7</CharacterButton>
                     <CharacterButton className="number">8</CharacterButton>
                     <CharacterButton className="number">9</CharacterButton>
-                    <CharacterButton className="operation">/</CharacterButton>
+                    <OpButton className="operation">/</OpButton>
                     <CharacterButton className="number">4</CharacterButton>
                     <CharacterButton className="number">5</CharacterButton>
                     <CharacterButton className="number">6</CharacterButton>
-                    <CharacterButton className="operation">*</CharacterButton>
+                    <OpButton className="operation">*</OpButton>
                     <CharacterButton className="number">1</CharacterButton>
                     <CharacterButton className="number">2</CharacterButton>
                     <CharacterButton className="number">3</CharacterButton>
-                    <CharacterButton className="operation">-</CharacterButton>
+                    <OpButton className="operation">-</OpButton>
                     <CharacterButton className="number">0</CharacterButton>
                     <CharacterButton className="number">.</CharacterButton>
                     <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
-                    <CharacterButton className="operation">+</CharacterButton>
+                    <OpButton className="operation">+</OpButton>
                     
                 </section>
             </form>
