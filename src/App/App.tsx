@@ -12,11 +12,13 @@ interface AppState
     output: string;
     prevInput: string;
     lex: boolean;
+    showMenu: boolean;
+    closeMenu: boolean;
 }
 
 class App extends React.Component<AppProps, AppState>
 {
-
+    closeMenu: any;
     private userInput;
     //memory
     memory : InputHistory;
@@ -32,7 +34,9 @@ class App extends React.Component<AppProps, AppState>
             input: "",
             output: "= 0",
             prevInput: "",
-            lex: false
+            lex: false,
+            showMenu: false,
+            //closeMenu: true,
         };
 
         this.userInput = React.createRef();
@@ -46,6 +50,18 @@ class App extends React.Component<AppProps, AppState>
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
 
+        this.showMenu = this.showMenu.bind(this);
+        //this.closeMenu = this.closeMenu.bind(this);
+    }
+
+    showMenu(event) {
+        event.preventDevault();
+
+        this.setState({
+            showMenu: true },
+            () => {
+                document.addEventListener('click', this.closeMenu);
+        });
     }
 
     handleButtonPushed(input: string)
@@ -243,6 +259,9 @@ class App extends React.Component<AppProps, AppState>
                     {this.state.output}
                 </section>
                 <section id="buttons">
+                    <div className = "menu">
+                        <EntryButton className="action" onClick={this.ShowMenu}>Menu</EntryButton>
+                    </div>
                     <div className="memory">
                         <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
                         <EntryButton className="action" callback={this.handleMemoryBack}>&#x025BD;</EntryButton>
@@ -269,6 +288,18 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton className="number">.</CharacterButton>
                     <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton className="operation">+</CharacterButton>
+                    
+                    this.state.showMenu
+                        ? (
+                            <div className="menu">
+                                <EntryButton> Menu item 1 </EntryButton>
+                                <EntryButton> Menu item 2 </EntryButton>
+                                <EntryButton> Menu item 3 </EntryButton>
+                            </div>
+                        ) 
+                        : (
+                            null
+                        )
                     
                 </section>
             </form>
