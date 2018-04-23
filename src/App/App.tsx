@@ -106,9 +106,9 @@ class App extends React.Component<AppProps, AppState>
                 };
             }
         });
-
-        this.userInput.current.focus();
+        
     }
+
     handleAns()
     {
         this.memory.begin();
@@ -121,8 +121,6 @@ class App extends React.Component<AppProps, AppState>
                 lex: lex(prevState.input + this.state.prevInput)
             };
         });
-
-        this.userInput.current.focus();
     }
 
     handleTyping()
