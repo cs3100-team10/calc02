@@ -14,6 +14,8 @@ $darner-tail: #74b9ff;
 $chi-gong: #d63031;
 $mint-leaf: #00b894;
 
+@import "partials/numbers";
+
 *
 {
     box-sizing: border-box;
@@ -22,73 +24,59 @@ $mint-leaf: #00b894;
 body
 {
     font-family: "Open Sans", sans-serif;
-
     background: $dracula-orchid;
     color: $city-lights;
 }
+
+:root
+{
+    font-size: $font-size-mobile;
+
+    @include desktop
+    {
+        font-size: $font-size-desktop;
+    }
+}
+
+
 
 #render
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-
-    /*
-    .background-color
-    {
-        &.red
-        {
-            background: red;
-        }
-        &.orange
-        {
-            background: orange;
-        }
-        &.yellow
-        {
-            background: yellow;
-        }
-        &.green
-        {
-            background: green;
-        }
-        &.blue
-        {
-            background: blue;
-        }
-        &.purple
-        {
-            background: purple;
-        }
-        &.pink
-        {
-            background: pink;
-        }
-    }
-    */
-   
+    min-height: 100vh;
 }
 
 #calculator
 {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    width: 95%;
-    max-width: 20rem;
+    align-items: center;
+    width: 100%;
+    margin: 0 2px;
+    max-width: 320px;
 }
 
 #input
 {
-    margin-bottom: 2px;
-    position: relative;
+    position: sticky;
+    top: 0;
+
+    // Make input width the same as four buttons
+    // (buttons are square, height = width)
+    width: calc(4 * #{$button-height-mobile});
+
+    @include desktop
+    {
+        width: 100%;
+    }
 
     input[type="text"]
     {
         display: block;
         width: 100%;
-        height: 4rem;
+        height: $input-height-mobile;
         border: 0;
         border-left: 2px solid;
         padding: 0 0.3rem;
@@ -99,6 +87,11 @@ body
         outline: 0;
         background: $american-river;
         color: $city-lights;
+
+        @include desktop
+        {
+            height: $input-height-desktop;
+        }
 
         &::placeholder
         {
@@ -123,25 +116,46 @@ body
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
-    height: 4rem;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     padding: 0 0.3rem;
     font-size: 1.5rem;
     text-align: right;
     vertical-align: middle;
+
+    height: $input-height-mobile;
+    width: 4 * $button-height-mobile; // width of 4 buttons
+
+    @include desktop
+    {
+        height: $input-height-desktop;
+        width: 100%;
+    }
 }
 
 #buttons
 {
+    $button-size-mobile: calc(#{$button-height-mobile} - #{$grid-gutter});
+    $button-size-desktop: calc(#{$button-height-desktop} - #{$grid-gutter});
+
     display: grid;
-    grid-template-columns: repeat(4, calc(5rem - 1.5px));
-    grid-auto-rows: 1fr;
-    grid-gap: 2px;
+    grid-gap: $grid-gutter;
+    grid-template-columns: repeat(4, $button-size-mobile);
+    grid-template-rows: repeat(6, $button-size-mobile);
+
+    @include desktop
+    {
+        grid-template-columns: repeat(4, $button-size-desktop);
+        grid-template-rows: repeat(6, $button-size-desktop);
+    }
 
     > button
     {
-        height: calc(5rem - 1.5px);
+        height: $button-size-mobile;
+
+        @include desktop
+        {
+            height: $button-size-desktop;
+        }
     }
 
     .memory
@@ -152,7 +166,13 @@ body
 
         > button
         {
-            height: calc(50% - 1px);
+            // halve the height
+            height: calc(#{$button-height-mobile / 2} - #{$grid-gutter});
+
+            @include desktop
+            {
+                height: calc(50% - #{$grid-gutter - 1px});
+            }
         }
     }
 
@@ -164,8 +184,8 @@ body
 
         > button
         {
-            height: 100%;
-            width: calc(50% - 1px);
+            // halve the width
+            width: calc(50% - #{$grid-gutter - 1px});
         }
     }
 
@@ -174,99 +194,6 @@ body
         font-size: 1.5rem;
     }
 
-    /*.text-size
-    {
-        &.x-small
-        {
-            font-size: 10px
-        }
-        &.small
-        {
-            font-size: 12px
-        }
-        &.medium
-        {
-            font-size: 14px
-        }
-        &.large
-        {
-            font-size: 16px
-        }
-        &.x-large
-        {
-            font-size: 18px
-        }
-        &.x-x-large
-        {
-            font-size: 20px
-        }
-    }*/
-
-    /*.text-color
-    {
-        &.red
-        {
-            color: red;
-        }
-        &.orange
-        {
-            color: orange;
-        }
-        &.yellow
-        {
-            color: yellow;
-        }
-        &.green
-        {
-            color: green;
-        }
-        &.blue
-        {
-            color: blue;
-        }
-        &.purple
-        {
-            color: purple;
-        }
-        &.pink
-        {
-            color: pink;
-        }
-    }*/
-
-     /*
-    .button-color
-    {
-        &.red
-        {
-            background: red;
-        }
-        &.orange
-        {
-            background: orange;
-        }
-        &.yellow
-        {
-            background: yellow;
-        }
-        &.green
-        {
-            background: green;
-        }
-        &.blue
-        {
-            background: blue;
-        }
-        &.purple
-        {
-            background: purple;
-        }
-        &.pink
-        {
-            background: pink;
-        }
-    }
-    */
 }
 
 
@@ -320,4 +247,9 @@ button
     {
         cursor: pointer;
     }
+}
+
+@-ms-viewport
+{
+    width: device-width;
 }

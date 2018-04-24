@@ -61,8 +61,6 @@ class App extends React.Component<AppProps, AppState>
                 lex: lex(prevState.input + input)
             };
         });
-
-        this.userInput.current.focus();
     }
    
     handleOp(input: string)
@@ -108,9 +106,9 @@ class App extends React.Component<AppProps, AppState>
                 };
             }
         });
-
-        this.userInput.current.focus();
+        
     }
+
     handleAns()
     {
         this.memory.begin();
@@ -123,8 +121,6 @@ class App extends React.Component<AppProps, AppState>
                 lex: lex(prevState.input + this.state.prevInput)
             };
         });
-
-        this.userInput.current.focus();
     }
 
     handleTyping()
@@ -151,8 +147,6 @@ class App extends React.Component<AppProps, AppState>
                 prevInput: ""
             }
         });
-
-        this.userInput.current.focus();
     }
 
     handleMemoryUp()
@@ -169,8 +163,6 @@ class App extends React.Component<AppProps, AppState>
                 prevInput: ""
             };
         });
-
-        this.userInput.current.focus();
     }
 
     handleMemoryBack()
@@ -187,8 +179,6 @@ class App extends React.Component<AppProps, AppState>
                 prevInput: ""
             };
         });
-
-        this.userInput.current.focus();
     }
 
     handleBackspace()
@@ -207,8 +197,6 @@ class App extends React.Component<AppProps, AppState>
                 input: newInput
             };
         });
-
-        this.userInput.current.focus();
     }
 
     handleSubmit(event)
@@ -244,7 +232,6 @@ class App extends React.Component<AppProps, AppState>
         });
       
         event.preventDefault();
-        this.userInput.current.focus();
     }
 
     render()
