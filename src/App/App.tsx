@@ -18,6 +18,7 @@ interface AppState
 
 class App extends React.Component<AppProps, AppState>
 {
+    ShowMenu: any;
     closeMenu: any;
     private userInput;
     //memory
@@ -36,7 +37,7 @@ class App extends React.Component<AppProps, AppState>
             prevInput: "",
             lex: false,
             showMenu: false,
-            //closeMenu: true,
+            closeMenu: true,
         };
 
         this.userInput = React.createRef();
@@ -251,6 +252,7 @@ class App extends React.Component<AppProps, AppState>
         ].join(" ");
 
         return (
+           
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input {...inputAttrs} />
@@ -258,10 +260,12 @@ class App extends React.Component<AppProps, AppState>
                 <section id="output">
                     {this.state.output}
                 </section>
+                
+                <div>
+                    <button>Show Menu</button>
+                </div>
+
                 <section id="buttons">
-                    <div className = "menu">
-                        <EntryButton className="action" onClick={this.ShowMenu}>Menu</EntryButton>
-                    </div>
                     <div className="memory">
                         <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
                         <EntryButton className="action" callback={this.handleMemoryBack}>&#x025BD;</EntryButton>
@@ -289,7 +293,7 @@ class App extends React.Component<AppProps, AppState>
                     <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton className="operation">+</CharacterButton>
                     
-                    this.state.showMenu
+                    {/* this.state.showMenu
                         ? (
                             <div className="menu">
                                 <EntryButton> Menu item 1 </EntryButton>
@@ -299,7 +303,7 @@ class App extends React.Component<AppProps, AppState>
                         ) 
                         : (
                             null
-                        )
+                        ) */}
                     
                 </section>
             </form>
