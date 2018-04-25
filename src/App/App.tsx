@@ -12,13 +12,10 @@ interface AppState
     output: string;
     prevInput: string;
     lex: boolean;
-    showMenu: boolean;
-    closeMenu: boolean;
 }
 
 class App extends React.Component<AppProps, AppState>
 {
-    dropdownMenu: any;
     private userInput;
     //memory
     memory : InputHistory;
@@ -35,8 +32,6 @@ class App extends React.Component<AppProps, AppState>
             output: "= 0",
             prevInput: "",
             lex: false,
-            showMenu: false,
-            closeMenu: false,
         };
 
         this.userInput = React.createRef();
@@ -49,25 +44,6 @@ class App extends React.Component<AppProps, AppState>
         this.handleBackspace = this.handleBackspace.bind(this);
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
-
-        this.handleShowMenu = this.handleShowMenu.bind(this);
-        this.handleCloseMenu = this.handleCloseMenu.bind(this);
-    }
-
-    handleShowMenu(event) {
-        //event.preventDevault();
-
-        this.setState({ showMenu: true }, () => {
-                document.addEventListener('click', this.handleCloseMenu);
-        });
-    }
-
-    handleCloseMenu() {
-        if(!this.dropdownMenu.contains(event.target)) {
-            this.setState({ showMenu: false }, () => {
-                document.removeEventListener('click', this.handleCloseMenu);
-            });
-        }
     }
 
     handleButtonPushed(input: string)
@@ -266,23 +242,28 @@ class App extends React.Component<AppProps, AppState>
                     {this.state.output}
                 </section>
                 
-                <div>
-                    <button onClick={this.handleShowMenu}>Menu</button>
+                <div className="box">
+                    <a className="settingsLink" href="#popup1">Settings</a>
                 </div>
 
-                { 
-                    this.state.showMenu
-                        ? (
-                            <div className="menu" ref={(element) => {this.dropdownMenu = element;}}>
-                                <button> Theme </button>
-                                <button> Font </button>
-                                <button> Troll </button>
-                            </div>
-                        ) 
-                        : (
-                            null
-                        ) 
-                    }
+                <div id="popup1" className="overlay">
+                    <div className="popup">
+                        <h2>Settings</h2>
+                        <p></p>
+                        <a className="close" href="#">&times;</a>
+                        <div className="content">
+                            <p>Theme</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Night</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Day</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>High Contrast</EntryButton>
+                            <p>Font</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Large</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Normal</EntryButton>
+                            <p>Power</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>On/Off</EntryButton>
+                        </div>
+                    </div>
+                </div>
 
                 <section id="buttons">
                     <div className="memory">
