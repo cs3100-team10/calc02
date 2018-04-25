@@ -1,0 +1,47 @@
+
+// FONT SIZES
+// This section sets global font sizes.
+// The rem units used elsewhere in the calculator scale
+// from these sizes.
+// Multiply these numbers by 16 to get pixel values.
+
+// The :root font size on mobile
+$font-size-mobile: 0.8em;
+
+// The :root font size on desktop
+$font-size-desktop: 1em;
+
+// BUTTONS
+
+// The vertical/horizontal padding between buttons
+$grid-gutter: 2px;
+
+// GLOBAL HEIGHT MANAGEMENT
+
+// The total height of a button
+$button-height-desktop: 5rem;
+
+// The total height of any input/output elements
+$input-height-desktop: 4rem;
+
+// The total height of the calculator
+// 6 rows of buttons = 6 * 5rem = 30rem
+// 1 input, 1 output = 2 * 4rem = 8rem
+// 30rem + 8rem = 38rem
+$total-height: 6 * $button-height-desktop + 2 * $input-height-desktop;
+
+// Find a button's fraction of total height (13.16vh)
+$button-height-mobile: $button-height-desktop / $total-height * 100vh; // 13.16vh
+
+// Find an i/o's fraction of total height (10.52vh)
+$input-height-mobile: $input-height-desktop / $total-height * 100vh;
+
+
+// Utility mixin for generating media queries
+@mixin desktop
+{
+	@media only screen and (min-height: 610px)
+	{
+		@content;
+	}
+}

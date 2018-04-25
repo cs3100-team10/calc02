@@ -1,0 +1,63 @@
+
+$dracula-orchid: #2d3436;
+$electron-blue: #0984e3;
+$city-lights: #dfe6e9;
+$robins-egg: #00cec9;
+$exodus-fruit: #6c5ce7;
+$soothing-breeze: #b2bec3;
+$american-river: #636e72;
+$shy-moment: #a29bfe;
+$darner-tail: #74b9ff;
+$prunus-avium: #e84393;
+$orangeville: #e17055;
+
+$chi-gong: #d63031;
+$mint-leaf: #00b894;
+
+$themes: (
+	night: (
+		background: $dracula-orchid,
+		foreground: $city-lights,
+
+		background-input: $american-river,
+		placeholder: $soothing-breeze,
+
+		btn-text: $city-lights,
+		btn-text-inverted: $dracula-orchid,
+
+		btn-number: $soothing-breeze,
+		btn-operation: $electron-blue,
+		btn-action: $exodus-fruit,
+
+		success: $mint-leaf,
+		fail: $chi-gong
+	),
+	day: (
+		background: $city-lights,
+		foreground: $dracula-orchid,
+
+		background-input: $soothing-breeze,
+		placeholder: $american-river,
+
+		btn-text: $city-lights,
+		btn-text-inverted: $dracula-orchid,
+
+		btn-number: $soothing-breeze,
+		btn-operation: $orangeville,
+		btn-action: $chi-gong,
+
+		success: $mint-leaf,
+		fail: $chi-gong
+	)
+);
+
+@mixin theme-apply($property, $color-name)
+{
+	@each $theme, $palette in $themes
+	{
+		#theme.#{$theme} &
+		{
+			#{$property}: map-get($palette, $color-name);
+		}
+	}
+}

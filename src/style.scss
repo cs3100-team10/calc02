@@ -1,59 +1,67 @@
 @import "~reset-css/reset";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$dracula-orchid: #2d3436;
-$electron-blue: #0984e3;
-$city-lights: #dfe6e9;
-$robins-egg: #00cec9;
-$exodus-fruit: #6c5ce7;
-$soothing-breeze: #b2bec3;
-$american-river: #636e72;
-$shy-moment: #a29bfe;
-$darner-tail: #74b9ff;
-
-$chi-gong: #d63031;
-$mint-leaf: #00b894;
+@import "partials/colors";
+@import "partials/numbers";
 
 *
 {
     box-sizing: border-box;
 }
 
-body
+:root
 {
-    font-family: "Open Sans", sans-serif;
+	font-family: "Open Sans", sans-serif;
+    font-size: $font-size-mobile;
 
-    background: $dracula-orchid;
-    color: $city-lights;
+    @include desktop
+    {
+        font-size: $font-size-desktop;
+    }
 }
 
-#render
+
+
+#root
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+
+    @include theme-apply(background, background);
+    @include theme-apply(color, foreground);
 }
 
 #calculator
 {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    width: 95%;
-    max-width: 20rem;
+    align-items: center;
+    width: 100%;
+    margin: 0 2px;
+    max-width: 320px;
 }
 
 #input
 {
-    margin-bottom: 2px;
-    position: relative;
+    position: sticky;
+    top: 0;
+
+    // Make input width the same as four buttons
+    // (buttons are square, height = width)
+    width: calc(4 * #{$button-height-mobile});
+
+    @include desktop
+    {
+        width: 100%;
+    }
 
     input[type="text"]
     {
         display: block;
         width: 100%;
-        height: 4rem;
+        height: $input-height-mobile;
         border: 0;
         border-left: 2px solid;
         padding: 0 0.3rem;
@@ -62,22 +70,28 @@ body
         font-family: "Open Sans", sans-serif;
         text-align: right;
         outline: 0;
-        background: $american-river;
-        color: $city-lights;
+		
+        @include theme-apply(background, background-input);
+        @include theme-apply(color, foreground);
+
+        @include desktop
+        {
+            height: $input-height-desktop;
+        }
 
         &::placeholder
         {
-            color: $soothing-breeze;
+            @include theme-apply(color, placeholder);
         }
 
         &.pass
         {
-            border-left-color: $mint-leaf;
+            @include theme-apply(border-left-color, success)
         }
 
         &.fail
         {
-            border-left-color: $chi-gong;
+            @include theme-apply(border-left-color, fail);
         }
     }
 
@@ -88,25 +102,46 @@ body
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
-    height: 4rem;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     padding: 0 0.3rem;
     font-size: 1.5rem;
     text-align: right;
     vertical-align: middle;
+
+    height: $input-height-mobile;
+    width: 4 * $button-height-mobile; // width of 4 buttons
+
+    @include desktop
+    {
+        height: $input-height-desktop;
+        width: 100%;
+    }
 }
 
 #buttons
 {
+    $button-size-mobile: calc(#{$button-height-mobile} - #{$grid-gutter});
+    $button-size-desktop: calc(#{$button-height-desktop} - #{$grid-gutter});
+
     display: grid;
-    grid-template-columns: repeat(4, calc(5rem - 1.5px));
-    grid-auto-rows: 1fr;
-    grid-gap: 2px;
+    grid-gap: $grid-gutter;
+    grid-template-columns: repeat(4, $button-size-mobile);
+    grid-template-rows: repeat(6, $button-size-mobile);
+
+    @include desktop
+    {
+        grid-template-columns: repeat(4, $button-size-desktop);
+        grid-template-rows: repeat(6, $button-size-desktop);
+    }
 
     > button
     {
-        height: calc(5rem - 1.5px);
+        height: $button-size-mobile;
+
+        @include desktop
+        {
+            height: $button-size-desktop;
+        }
     }
 
     .memory
@@ -117,7 +152,13 @@ body
 
         > button
         {
-            height: calc(50% - 1px);
+            // halve the height
+            height: calc(#{$button-height-mobile / 2} - #{$grid-gutter});
+
+            @include desktop
+            {
+                height: calc(50% - #{$grid-gutter - 1px});
+            }
         }
     }
 
@@ -141,8 +182,8 @@ body
 
         > button
         {
-            height: 100%;
-            width: calc(50% - 1px);
+            // halve the width
+            width: calc(50% - #{$grid-gutter - 1px});
         }
     }
 
@@ -169,39 +210,44 @@ button
 
     &.number
     {
-        background: $soothing-breeze;
-        color: $dracula-orchid;
+        @include theme-apply(background, btn-number);
+        @include theme-apply(color, btn-text-inverted);
 
-        &:hover
-        {
-            background: lighten($soothing-breeze, 12%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($soothing-breeze, 12%);
+        // }
     }
 
     &.operation
     {
-        background: $electron-blue;
-        color: $city-lights;
+        @include theme-apply(background, btn-operation);
+        @include theme-apply(color, btn-text);
 
-        &:hover
-        {
-            background: lighten($electron-blue, 8%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($electron-blue, 8%);
+        // }
     }
 
     &.action
     {
-        background: $exodus-fruit;
-        color: $city-lights;
+        @include theme-apply(background, btn-action);
+        @include theme-apply(color, btn-text);
 
-        &:hover
-        {
-            background: lighten($exodus-fruit, 6%);
-        }
+        // &:hover
+        // {
+        //     background: lighten($exodus-fruit, 6%);
+        // }
     }
 
     &:hover
     {
         cursor: pointer;
     }
+}
+
+@-ms-viewport
+{
+    width: device-width;
 }
