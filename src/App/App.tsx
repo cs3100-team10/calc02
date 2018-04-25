@@ -18,8 +18,7 @@ interface AppState
 
 class App extends React.Component<AppProps, AppState>
 {
-    ShowMenu: any;
-    closeMenu: any;
+    dropdownMenu: any;
     private userInput;
     //memory
     memory : InputHistory;
@@ -37,7 +36,7 @@ class App extends React.Component<AppProps, AppState>
             prevInput: "",
             lex: false,
             showMenu: false,
-            closeMenu: true,
+            closeMenu: false,
         };
 
         this.userInput = React.createRef();
@@ -51,18 +50,24 @@ class App extends React.Component<AppProps, AppState>
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
 
-        this.showMenu = this.showMenu.bind(this);
-        //this.closeMenu = this.closeMenu.bind(this);
+        this.handleShowMenu = this.handleShowMenu.bind(this);
+        this.handleCloseMenu = this.handleCloseMenu.bind(this);
     }
 
-    showMenu(event) {
-        event.preventDevault();
+    handleShowMenu(event) {
+        //event.preventDevault();
 
-        this.setState({
-            showMenu: true },
-            () => {
-                document.addEventListener('click', this.closeMenu);
+        this.setState({ showMenu: true }, () => {
+                document.addEventListener('click', this.handleCloseMenu);
         });
+    }
+
+    handleCloseMenu() {
+        if(!this.dropdownMenu.contains(event.target)) {
+            this.setState({ showMenu: false }, () => {
+                document.removeEventListener('click', this.handleCloseMenu);
+            });
+        }
     }
 
     handleButtonPushed(input: string)
@@ -200,7 +205,7 @@ class App extends React.Component<AppProps, AppState>
                 return;
             }
         }    
-        
+
 
         this.setState((prevState) =>
         {
@@ -262,7 +267,7 @@ class App extends React.Component<AppProps, AppState>
                 </section>
                 
                 <div>
-                    <button>Show Menu</button>
+                    <button onClick={this.handleShowMenu}>Menu</button>
                 </div>
 
                 <section id="buttons">
@@ -292,19 +297,20 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton className="number">.</CharacterButton>
                     <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
                     <CharacterButton className="operation">+</CharacterButton>
-                    
-                    {/* this.state.showMenu
+            
+                { 
+                    this.state.showMenu
                         ? (
-                            <div className="menu">
-                                <EntryButton> Menu item 1 </EntryButton>
-                                <EntryButton> Menu item 2 </EntryButton>
-                                <EntryButton> Menu item 3 </EntryButton>
+                            <div className="menu" ref={(element) => {this.dropdownMenu = element;}}>
+                                <button> Menu item 1 </button>
+                                <button> Menu item 2 </button>
+                                <button> Menu item 3 </button>
                             </div>
                         ) 
                         : (
                             null
-                        ) */}
-                    
+                        ) 
+                    }
                 </section>
             </form>
         );
