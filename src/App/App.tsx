@@ -270,6 +270,20 @@ class App extends React.Component<AppProps, AppState>
                     <button onClick={this.handleShowMenu}>Menu</button>
                 </div>
 
+                { 
+                    this.state.showMenu
+                        ? (
+                            <div className="menu" ref={(element) => {this.dropdownMenu = element;}}>
+                                <button> Theme </button>
+                                <button> Font </button>
+                                <button> Troll </button>
+                            </div>
+                        ) 
+                        : (
+                            null
+                        ) 
+                    }
+
                 <section id="buttons">
                     <div className="memory">
                         <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
@@ -296,21 +310,7 @@ class App extends React.Component<AppProps, AppState>
                     <CharacterButton className="number">0</CharacterButton>
                     <CharacterButton className="number">.</CharacterButton>
                     <EntryButton className="operation" callback={this.handleSubmit} submit>=</EntryButton>
-                    <CharacterButton className="operation">+</CharacterButton>
-            
-                { 
-                    this.state.showMenu
-                        ? (
-                            <div className="menu" ref={(element) => {this.dropdownMenu = element;}}>
-                                <button> Menu item 1 </button>
-                                <button> Menu item 2 </button>
-                                <button> Menu item 3 </button>
-                            </div>
-                        ) 
-                        : (
-                            null
-                        ) 
-                    }
+                    <CharacterButton className="operation">+</CharacterButton>                
                 </section>
             </form>
         );
