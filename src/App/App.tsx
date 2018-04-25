@@ -4,6 +4,18 @@ import EntryButton from "./EntryButton";
 import { lex, parse } from "../Parser/parser";
 import InputHistory from "../InputHistory/InputHistory";
 
+enum CalcTheme
+{
+    Day = "day",
+    Night = "night",
+}
+
+enum CalcTextSize
+{
+    Regular = "regular",
+    Large = "large",
+}
+
 interface AppProps {}
 
 interface AppState
@@ -14,6 +26,9 @@ interface AppState
     lex: boolean;
     showMenu: boolean;
     closeMenu: boolean;
+    theme: CalcTheme;
+    textSize: CalcTextSize;
+    power: boolean;
 }
 
 class App extends React.Component<AppProps, AppState>
@@ -37,6 +52,9 @@ class App extends React.Component<AppProps, AppState>
             lex: false,
             showMenu: false,
             closeMenu: false,
+            theme: CalcTheme.Night,
+            textSize: CalcTextSize.Regular,
+            power: true
         };
 
         this.userInput = React.createRef();
@@ -50,7 +68,7 @@ class App extends React.Component<AppProps, AppState>
         this.handleBackspace = this.handleBackspace.bind(this);
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
-
+        this.handleOp = this.handleOp.bind(this);
         this.handleShowMenu = this.handleShowMenu.bind(this);
         this.handleCloseMenu = this.handleCloseMenu.bind(this);
     }
@@ -297,8 +315,15 @@ class App extends React.Component<AppProps, AppState>
             this.state.lex ? "pass" : "fail"
         ].join(" ");
 
+        const themeClasses = [
+            // this lets us target the power-off class from CSS
+            // as if it were a theme
+            this.state.power ? this.state.theme : "power-off",
+            this.state.textSize
+        ].join(" ");
+
         return (
-            <div id="theme" className="day"><div id="root">
+            <div id="theme" className={themeClasses}><div id="root">
             <form id="calculator" onSubmit={this.handleSubmit}>
                 <section id="input">
                     <input {...inputAttrs} />
