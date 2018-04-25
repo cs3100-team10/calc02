@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 @import "partials/colors";
+@import "partials/numbers";
 
 *
 {
@@ -10,14 +11,16 @@
 
 :root
 {
-    font-family: "Open Sans", sans-serif;
-    font-size: 0.8em;
+	font-family: "Open Sans", sans-serif;
+    font-size: $font-size-mobile;
 
-    @media only screen and (min-width: 321px)
+    @include desktop
     {
-        font-size: 1em;
+        font-size: $font-size-desktop;
     }
 }
+
+
 
 #root
 {
@@ -34,6 +37,7 @@
 {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     margin: 0 2px;
     max-width: 320px;
@@ -41,14 +45,23 @@
 
 #input
 {
-    margin-bottom: 2px;
-    position: relative;
+    position: sticky;
+    top: 0;
+
+    // Make input width the same as four buttons
+    // (buttons are square, height = width)
+    width: calc(4 * #{$button-height-mobile});
+
+    @include desktop
+    {
+        width: 100%;
+    }
 
     input[type="text"]
     {
         display: block;
         width: 100%;
-        height: 4rem;
+        height: $input-height-mobile;
         border: 0;
         border-left: 2px solid;
         padding: 0 0.3rem;
@@ -57,9 +70,14 @@
         font-family: "Open Sans", sans-serif;
         text-align: right;
         outline: 0;
-
+		
         @include theme-apply(background, background-input);
         @include theme-apply(color, foreground);
+
+        @include desktop
+        {
+            height: $input-height-desktop;
+        }
 
         &::placeholder
         {
@@ -84,33 +102,45 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
-    height: 4rem;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
     padding: 0 0.3rem;
     font-size: 1.5rem;
     text-align: right;
     vertical-align: middle;
+
+    height: $input-height-mobile;
+    width: 4 * $button-height-mobile; // width of 4 buttons
+
+    @include desktop
+    {
+        height: $input-height-desktop;
+        width: 100%;
+    }
 }
 
 #buttons
 {
-    display: grid;
-    grid-template-columns: repeat(4, calc(25vw - 2.5px));
-    grid-gap: 2px;
+    $button-size-mobile: calc(#{$button-height-mobile} - #{$grid-gutter});
+    $button-size-desktop: calc(#{$button-height-desktop} - #{$grid-gutter});
 
-    @media only screen and (min-width: 321px)
+    display: grid;
+    grid-gap: $grid-gutter;
+    grid-template-columns: repeat(4, $button-size-mobile);
+    grid-template-rows: repeat(6, $button-size-mobile);
+
+    @include desktop
     {
-        grid-template-columns: repeat(4, calc(5rem - 2px));
+        grid-template-columns: repeat(4, $button-size-desktop);
+        grid-template-rows: repeat(6, $button-size-desktop);
     }
 
     > button
     {
-        height: calc(25vw - 2.5px);
+        height: $button-size-mobile;
 
-        @media only screen and (min-width: 321px)
+        @include desktop
         {
-            height: calc(5rem - 2px);
+            height: $button-size-desktop;
         }
     }
 
@@ -122,11 +152,12 @@
 
         > button
         {
-            height: calc(12.5vw - 2.2px);
+            // halve the height
+            height: calc(#{$button-height-mobile / 2} - #{$grid-gutter});
 
-            @media only screen and (min-width: 321px)
+            @include desktop
             {
-                height: calc(50% - 1px);
+                height: calc(50% - #{$grid-gutter - 1px});
             }
         }
     }
@@ -139,12 +170,8 @@
 
         > button
         {
-            width: calc(12.5vw - 2.2px);
-
-            @media only screen and (min-width: 321px)
-            {
-                width: calc(50% - 1px);
-            }
+            // halve the width
+            width: calc(50% - #{$grid-gutter - 1px});
         }
     }
 

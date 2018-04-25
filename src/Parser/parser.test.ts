@@ -21,11 +21,6 @@ describe("the lexer", () =>
         expect(lex(randFloat.toString())).toEqual(true);
     });
 
-    it("does not lex letters", () =>
-    {
-       expect(lex("abc")).toEqual(false); 
-    });
-
     it("lexes a number with a sign before it", () =>
     {
         expect(lex(`+ ${randInt.toString()}`)).toEqual(true);
@@ -60,6 +55,16 @@ describe("the lexer", () =>
         expect(lex(`${randInt.toString()} + ${randFloat.toString()}`)).toEqual(true);
     });
 
+    it("lexes binary modulus correctly", () =>
+    {
+        expect(lex(`${randInt.toString()} % ${randFloat.toString()}`)).toEqual(true);
+    });
+
+    it("lexes binary exponentiation correctly", () =>
+    {
+        expect(lex(`${randInt.toString()} ^ ${randFloat.toString()}`)).toEqual(true);
+    });
+
     it("lexes expressions with parentheses", () =>
     {
         expect(lex(`( ${randInt.toString()} )`)).toEqual(true);
@@ -69,6 +74,12 @@ describe("the lexer", () =>
     {
         expect(lex(`( ${randInt.toString()}`)).toEqual(false);
         expect(lex(`${randFloat.toString()} )`)).toEqual(false);
+    });
+
+    it("lexes pi as a number", () =>
+    {
+        expect(lex(`pi`)).toEqual(true);
+        expect(lex(String.fromCharCode(0x03C0))).toEqual(true); // unicode pi
     });
 
 });
@@ -105,6 +116,16 @@ describe("the parser", () =>
         expect(parse("20 / 4")).toEqual(5);
     });
 
+    it("evaluates binary modulus", () =>
+    {
+        expect(parse("10 % 3")).toEqual(1);
+    });
+
+    it("evaluates binary exponentiation", () =>
+    {
+        expect(parse("10 ^ 2")).toEqual(100);
+    });
+
     it("evaluates expressions in parentheses", () =>
     {
         expect(parse("( 15 )")).toEqual(15)
@@ -120,9 +141,14 @@ describe("the parser", () =>
         expect(parse("4 - 5 * 10")).toEqual(-46);
     });
 
+    it("evaluates pi correctly", () =>
+    {
+        expect(parse("pi")).toBeCloseTo(Math.PI);
+    });
+
     it("throws an error if lexer does not pass", () =>
     {
-        expect(() => parse("abc")).toThrow();
+        expect(() => parse("(")).toThrow();
     });
 
     it("throws an error on attempted division by zero", () =>
