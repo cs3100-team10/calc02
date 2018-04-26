@@ -309,29 +309,6 @@ class App extends React.Component<AppProps, AppState>
                     {this.state.output}
                 </section>
                 
-                <div className="box">
-                    <a className="settingsLink" href="#popup1">Settings</a>
-                </div>
-
-                <div id="popup1" className="overlay">
-                    <div className="popup">
-                        <h2>Settings</h2>
-                        <p></p>
-                        <a className="close" href="#">&times;</a>
-                        <div className="content">
-                            <p>Theme</p>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>Night</EntryButton>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>Day</EntryButton>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>High Contrast</EntryButton>
-                            <p>Font</p>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>Large</EntryButton>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>Normal</EntryButton>
-                            <p>Power</p>
-                            <EntryButton className="number" callback={this.handleSubmit} submit>On/Off</EntryButton>
-                        </div>
-                    </div>
-                </div>
-
                 <section id="buttons">
                     <div className="memory">
                         <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
@@ -365,6 +342,28 @@ class App extends React.Component<AppProps, AppState>
                     <OpButton className="operation">+</OpButton>
                     
                 </section>
+                <div className="box">
+                    <a className="settingsLink" href="#popup1">Settings</a>
+                </div>
+
+                <div id="popup1" className="overlay">
+                    <div className="popup">
+                        <h2>Settings</h2>
+                        <p></p>
+                        <a className="close" href="#">&times;</a>
+                        <div className="content">
+                            <p>Theme</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Night</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Day</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>High Contrast</EntryButton>
+                            <p>Font</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Large</EntryButton>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>Normal</EntryButton>
+                            <p>Power</p>
+                            <EntryButton className="number" callback={this.handleSubmit} submit>On/Off</EntryButton>
+                        </div>
+                    </div>
+                </div>
             </form>
             </div></div>
         );
