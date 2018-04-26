@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface EntryButtonProps
 {
-    children?: string;
+    children?: any;
     callback?: any;
     submit?: boolean;
     className?: string;

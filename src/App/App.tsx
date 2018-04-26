@@ -1,6 +1,16 @@
 import * as React from "react";
-import EntryButton from "./EntryButton";
+import FaIcon from "@fortawesome/react-fontawesome";
+import {
+    faMoon,
+    faSun,
+    faCog,
+    faAngleUp,
+    faAngleDown,
+    faAngleDoubleUp,
+    faAngleDoubleDown,
+    faArrowLeft } from "@fortawesome/fontawesome-free-solid";
 
+import EntryButton from "./EntryButton";
 import { lex, parse } from "../Parser/parser";
 import InputHistory from "../InputHistory/InputHistory";
 
@@ -328,7 +338,7 @@ class App extends React.Component<AppProps, AppState>
             return <EntryButton callback={callback} className={props.className}>{props.children}</EntryButton>;
         }
 
-        const ThemeButton = (props: {theme: CalcTheme, children: string}) =>
+        const ThemeButton = (props: {theme: CalcTheme, children?: any}) =>
         {
             const callback = (event) =>
             {
@@ -341,7 +351,7 @@ class App extends React.Component<AppProps, AppState>
             return <EntryButton callback={callback} className={classes}>{props.children}</EntryButton>;
         }
 
-        const TextSizeButton = (props: {textSize: CalcTextSize, children: string}) =>
+        const TextSizeButton = (props: {textSize: CalcTextSize, children?: any}) =>
         {
             const callback = (event) =>
             {
@@ -387,10 +397,16 @@ class App extends React.Component<AppProps, AppState>
                 </section>
                 <section id="buttons">
                     <div className="memory">
-                        <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
-                        <EntryButton className="action" callback={this.handleMemoryBack}>&#x025BD;</EntryButton>
+                        <EntryButton className="action" callback={this.handleMemoryUp}>
+                            <FaIcon icon={faAngleUp} />
+                        </EntryButton>
+                        <EntryButton className="action" callback={this.handleMemoryBack}>
+                            <FaIcon icon={faAngleDown} />
+                        </EntryButton>
                     </div>
-                    <EntryButton className="action" callback={this.handleBackspace}>&larr;</EntryButton>
+                    <EntryButton className="action" callback={this.handleBackspace}>
+                        <FaIcon icon={faArrowLeft} />
+                    </EntryButton>
                     <EntryButton className="action" callback={this.handleClear}>C</EntryButton>
                     <EntryButton className="action" callback={this.handleAns}>Ans</EntryButton>
                     <CharacterButton className="operation">&pi;</CharacterButton>
@@ -420,23 +436,34 @@ class App extends React.Component<AppProps, AppState>
                 </section>
             </form>
             <section className="menu-wrapper">
-                <button className="menu-toggle" onClick={this.handleMenuToggle}>Settings</button>
+                <button className="menu-toggle" onClick={this.handleMenuToggle}>
+                    <FaIcon icon={faCog} />
+                </button>
                 
                 {this.state.showMenu &&
                     <ul className="menu">
                         <li>
-                            <ThemeButton theme={CalcTheme.Day}>Day</ThemeButton>
+                            <ThemeButton theme={CalcTheme.Day}>
+                                <FaIcon icon={faSun} />
+                            </ThemeButton>
                         </li>
                         <li>
-                            <ThemeButton theme={CalcTheme.Night}>Night</ThemeButton>
+                            <ThemeButton theme={CalcTheme.Night}>
+                                <FaIcon icon={faMoon} />
+                            </ThemeButton>
                         </li>
                         <li className="divider"></li>
                         <li>
-                            <TextSizeButton textSize={CalcTextSize.Regular}>Regular</TextSizeButton>
+                            <TextSizeButton textSize={CalcTextSize.Regular}>
+                                <FaIcon icon={faAngleDoubleDown} />
+                            </TextSizeButton>
                         </li>
                         <li>
-                            <TextSizeButton textSize={CalcTextSize.Large}>Large</TextSizeButton>
+                            <TextSizeButton textSize={CalcTextSize.Large}>
+                            <FaIcon icon={faAngleDoubleUp} />
+                            </TextSizeButton>
                         </li>
+                        <li className="divider"></li>
                     </ul>
                 }
                 

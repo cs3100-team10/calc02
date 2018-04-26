@@ -48,6 +48,10 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
+    "@fortawesome/fontawesome-free-solid": "^5.0.10",
+    "@fortawesome/react-fontawesome": "^0.0.18",
+    "prop-types": "^15.6.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "reset-css": "^3.0.0"
