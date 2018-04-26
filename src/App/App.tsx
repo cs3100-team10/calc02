@@ -69,8 +69,9 @@ class App extends React.Component<AppProps, AppState>
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
         this.handleOp = this.handleOp.bind(this);
-        this.handleShowMenu = this.handleShowMenu.bind(this);
-        this.handleCloseMenu = this.handleCloseMenu.bind(this);
+        // this.handleShowMenu = this.handleShowMenu.bind(this);
+        // this.handleCloseMenu = this.handleCloseMenu.bind(this);
+        this.handleMenuToggle = this.handleMenuToggle.bind(this);
     }
 
     handleShowMenu(event) {
@@ -87,6 +88,30 @@ class App extends React.Component<AppProps, AppState>
                 document.removeEventListener('click', this.handleCloseMenu);
             });
         }
+    }
+
+    handleMenuToggle()
+    {
+        this.setState((prevState) =>
+        {
+            return {
+                showMenu: !prevState.showMenu
+            };
+        });
+    }
+
+    handleThemeChange(theme: CalcTheme)
+    {
+        this.setState({
+            theme
+        });
+    }
+
+    handleTextSizeChange(textSize: CalcTextSize)
+    {
+        this.setState({
+            textSize
+        });
     }
 
     handleButtonPushed(input: string)
@@ -300,6 +325,32 @@ class App extends React.Component<AppProps, AppState>
             return <EntryButton callback={callback} className={props.className}>{props.children}</EntryButton>;
         }
 
+        const ThemeButton = (props: {theme: CalcTheme, children: string}) =>
+        {
+            const callback = (event) =>
+            {
+                event.preventDefault();
+                this.handleThemeChange(props.theme);
+            };
+
+            const classes = (this.state.theme == props.theme ? "active" : "");
+
+            return <EntryButton callback={callback} className={classes}>{props.children}</EntryButton>;
+        }
+
+        const TextSizeButton = (props: {textSize: CalcTextSize, children: string}) =>
+        {
+            const callback = (event) =>
+            {
+                event.preventDefault();
+                this.handleTextSizeChange(props.textSize)
+            }
+
+            const classes = (this.state.textSize == props.textSize ? "active" : "");
+
+            return <EntryButton callback={callback} className={classes}>{props.children}</EntryButton>;
+        }
+
         const inputAttrs = {
             autoFocus: true,
             type: "text",
@@ -331,25 +382,6 @@ class App extends React.Component<AppProps, AppState>
                 <section id="output">
                     {this.state.output}
                 </section>
-                
-                <div>
-                    <button onClick={this.handleShowMenu}>Menu</button>
-                </div>
-
-                { 
-                    this.state.showMenu
-                        ? (
-                            <div className="menu" ref={(element) => {this.dropdownMenu = element;}}>
-                                <button> Theme </button>
-                                <button> Font </button>
-                                <button> Troll </button>
-                            </div>
-                        ) 
-                        : (
-                            null
-                        ) 
-                    }
-
                 <section id="buttons">
                     <div className="memory">
                         <EntryButton className="action" callback={this.handleMemoryUp}>&#x025B3;</EntryButton>
@@ -384,6 +416,28 @@ class App extends React.Component<AppProps, AppState>
                     
                 </section>
             </form>
+            <section className="menu-wrapper">
+                <button className="menu-toggle" onClick={this.handleMenuToggle}>Settings</button>
+                
+                {this.state.showMenu &&
+                    <ul className="menu">
+                        <li>
+                            <ThemeButton theme={CalcTheme.Day}>Day</ThemeButton>
+                        </li>
+                        <li>
+                            <ThemeButton theme={CalcTheme.Night}>Night</ThemeButton>
+                        </li>
+                        <li className="divider"></li>
+                        <li>
+                            <TextSizeButton textSize={CalcTextSize.Regular}>Regular</TextSizeButton>
+                        </li>
+                        <li>
+                            <TextSizeButton textSize={CalcTextSize.Large}>Large</TextSizeButton>
+                        </li>
+                    </ul>
+                }
+                
+            </section>
             </div></div>
         );
     }
