@@ -48,6 +48,23 @@ $themes: (
 
 		success: $mint-leaf,
 		fail: $chi-gong
+	),
+	power-off: (
+		background: black,
+		foreground: black,
+
+		background-input: black,
+		placeholder: black,
+
+		btn-text: black,
+		btn-text-inverted: black,
+
+		btn-number: black,
+		btn-operation: black,
+		btn-action: black,
+
+		success: black,
+		fail: black
 	)
 );
 

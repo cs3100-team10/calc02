@@ -8,7 +8,8 @@ import {
     faAngleDown,
     faAngleDoubleUp,
     faAngleDoubleDown,
-    faArrowLeft } from "@fortawesome/fontawesome-free-solid";
+    faArrowLeft,
+    faPowerOff } from "@fortawesome/fontawesome-free-solid";
 
 import EntryButton from "./EntryButton";
 import { lex, parse } from "../Parser/parser";
@@ -85,6 +86,7 @@ class App extends React.Component<AppProps, AppState>
 
         this.handleThemeChange = this.handleThemeChange.bind(this);
         this.handleTextSizeChange = this.handleTextSizeChange.bind(this);
+        this.handlePowerToggle = this.handlePowerToggle.bind(this);
     }
 
     handleShowMenu(event) {
@@ -124,6 +126,16 @@ class App extends React.Component<AppProps, AppState>
     {
         this.setState({
             textSize
+        });
+    }
+
+    handlePowerToggle()
+    {
+        this.setState((prevState) =>
+        {
+            return {
+                power: !prevState.power
+            };
         });
     }
 
@@ -442,6 +454,12 @@ class App extends React.Component<AppProps, AppState>
                 
                 {this.state.showMenu &&
                     <ul className="menu">
+                        <li>
+                            <EntryButton callback={() => this.handlePowerToggle()}>
+                                <FaIcon icon={faPowerOff} />
+                            </EntryButton>
+                        </li>
+                        <li className="divider"></li>
                         <li>
                             <ThemeButton theme={CalcTheme.Day}>
                                 <FaIcon icon={faSun} />
