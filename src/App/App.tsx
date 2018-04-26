@@ -72,6 +72,9 @@ class App extends React.Component<AppProps, AppState>
         // this.handleShowMenu = this.handleShowMenu.bind(this);
         // this.handleCloseMenu = this.handleCloseMenu.bind(this);
         this.handleMenuToggle = this.handleMenuToggle.bind(this);
+
+        this.handleThemeChange = this.handleThemeChange.bind(this);
+        this.handleTextSizeChange = this.handleTextSizeChange.bind(this);
     }
 
     handleShowMenu(event) {
