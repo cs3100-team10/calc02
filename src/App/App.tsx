@@ -36,7 +36,6 @@ interface AppState
     prevInput: string;
     lex: boolean;
     showMenu: boolean;
-    closeMenu: boolean;
     theme: CalcTheme;
     textSize: CalcTextSize;
     power: boolean;
@@ -44,7 +43,6 @@ interface AppState
 
 class App extends React.Component<AppProps, AppState>
 {
-    dropdownMenu: any;
     private userInput;
     //memory
     memory : InputHistory;
@@ -62,7 +60,6 @@ class App extends React.Component<AppProps, AppState>
             prevInput: "",
             lex: false,
             showMenu: false,
-            closeMenu: false,
             theme: CalcTheme.Night,
             textSize: CalcTextSize.Regular,
             power: true
@@ -80,29 +77,10 @@ class App extends React.Component<AppProps, AppState>
         this.handleMemoryUp = this.handleMemoryUp.bind(this);
         this.handleMemoryBack = this.handleMemoryBack.bind(this);
         this.handleOp = this.handleOp.bind(this);
-        // this.handleShowMenu = this.handleShowMenu.bind(this);
-        // this.handleCloseMenu = this.handleCloseMenu.bind(this);
         this.handleMenuToggle = this.handleMenuToggle.bind(this);
-
         this.handleThemeChange = this.handleThemeChange.bind(this);
         this.handleTextSizeChange = this.handleTextSizeChange.bind(this);
         this.handlePowerToggle = this.handlePowerToggle.bind(this);
-    }
-
-    handleShowMenu(event) {
-        //event.preventDevault();
-
-        this.setState({ showMenu: true }, () => {
-                document.addEventListener('click', this.handleCloseMenu);
-        });
-    }
-
-    handleCloseMenu() {
-        if(!this.dropdownMenu.contains(event.target)) {
-            this.setState({ showMenu: false }, () => {
-                document.removeEventListener('click', this.handleCloseMenu);
-            });
-        }
     }
 
     handleMenuToggle()
@@ -368,7 +346,7 @@ class App extends React.Component<AppProps, AppState>
             const callback = (event) =>
             {
                 event.preventDefault();
-                this.handleTextSizeChange(props.textSize)
+                this.handleTextSizeChange(props.textSize);
             }
 
             const classes = (this.state.textSize == props.textSize ? "active" : "");
