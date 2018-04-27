@@ -280,10 +280,10 @@ button
         @include theme-apply(background, btn-number);
         @include theme-apply(color, btn-text-inverted);
 
-        // &:hover
-        // {
-        //     background: lighten($soothing-breeze, 12%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-number-hover);
+        }
     }
 
     &.operation
@@ -291,10 +291,10 @@ button
         @include theme-apply(background, btn-operation);
         @include theme-apply(color, btn-text);
 
-        // &:hover
-        // {
-        //     background: lighten($electron-blue, 8%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-operation-hover);
+        }
     }
 
     &.action
@@ -302,10 +302,10 @@ button
         @include theme-apply(background, btn-action);
         @include theme-apply(color, btn-text);
 
-        // &:hover
-        // {
-        //     background: lighten($exodus-fruit, 6%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-action-hover);
+        }
     }
 
     &:hover
