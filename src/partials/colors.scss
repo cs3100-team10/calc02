@@ -29,6 +29,10 @@ $themes: (
 		btn-operation: $electron-blue,
 		btn-action: $exodus-fruit,
 
+		btn-number-hover: lighten($soothing-breeze, 12%),
+		btn-operation-hover: lighten($electron-blue, 8%),
+		btn-action-hover: lighten($exodus-fruit, 6%),
+
 		success: $mint-leaf,
 		fail: $chi-gong
 	),
@@ -46,8 +50,33 @@ $themes: (
 		btn-operation: $orangeville,
 		btn-action: $chi-gong,
 
+		btn-number-hover: lighten($soothing-breeze, 5%),
+		btn-operation-hover: lighten($orangeville, 9%),
+		btn-action-hover: lighten($chi-gong, 9%),
+
 		success: $mint-leaf,
 		fail: $chi-gong
+	),
+	power-off: (
+		background: black,
+		foreground: black,
+
+		background-input: black,
+		placeholder: black,
+
+		btn-text: black,
+		btn-text-inverted: black,
+
+		btn-number: black,
+		btn-operation: black,
+		btn-action: black,
+
+		btn-number-hover: black,
+		btn-operation-hover: black,
+		btn-action-hover: black,
+
+		success: black,
+		fail: black
 	)
 );
 

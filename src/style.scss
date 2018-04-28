@@ -25,6 +25,7 @@
 #root
 {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -162,6 +163,18 @@
         }
     }
 
+    .menu
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        > button
+        {
+            height: calc(50% - 1px);
+        }
+    }
+
     .parens
     {
         display: flex;
@@ -182,6 +195,71 @@
 
 }
 
+.menu-wrapper
+{
+    width: calc(4 * #{$button-height-mobile});
+
+    @include desktop
+    {
+        width: 100%;
+    }
+
+    @media only screen and (min-height: 750px)
+    {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.menu-toggle
+{
+    font-size: 1.5rem;
+    background: none;
+    @include theme-apply(color, background-input);
+
+    height: 3rem;
+    width: 3rem;
+}
+
+.menu
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+
+    button
+    {
+        display: block;
+        width: 100%;
+
+        font-size: 1.5rem;
+        height: 3rem;
+        width: 3rem;
+
+        background: none;
+        @include theme-apply(color, background-input);
+
+        &.active
+        {
+            @include theme-apply(color, foreground);
+        }
+    }
+
+    .divider
+    {
+        width: 1px;
+        height: 2rem;
+        margin: 0 1rem;
+        @include theme-apply(background, background-input);
+    }
+}
+
 
 button
 {
@@ -193,6 +271,7 @@ button
     
     outline: 0;
     border: 0;
+    padding: 0;
 
     font-family: "Open Sans", sans-serif;
 
@@ -201,10 +280,10 @@ button
         @include theme-apply(background, btn-number);
         @include theme-apply(color, btn-text-inverted);
 
-        // &:hover
-        // {
-        //     background: lighten($soothing-breeze, 12%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-number-hover);
+        }
     }
 
     &.operation
@@ -212,10 +291,10 @@ button
         @include theme-apply(background, btn-operation);
         @include theme-apply(color, btn-text);
 
-        // &:hover
-        // {
-        //     background: lighten($electron-blue, 8%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-operation-hover);
+        }
     }
 
     &.action
@@ -223,10 +302,10 @@ button
         @include theme-apply(background, btn-action);
         @include theme-apply(color, btn-text);
 
-        // &:hover
-        // {
-        //     background: lighten($exodus-fruit, 6%);
-        // }
+        &:hover
+        {
+            @include theme-apply(background, btn-action-hover);
+        }
     }
 
     &:hover
