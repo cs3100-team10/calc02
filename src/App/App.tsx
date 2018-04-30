@@ -180,13 +180,17 @@ class App extends React.Component<AppProps, AppState>
     handleAns()
     {
         this.memory.begin();
+        
+        this.memory.back();
+        let newInput = this.memory.current();
+        this.memory.forward();
 
         this.setState((prevState) =>
         {
             return {
                 ...prevState,
-                input: prevState.input + this.state.prevInput,
-                lex: lex(prevState.input + this.state.prevInput)
+                input: prevState.input + newInput,
+                lex: lex(prevState.input + newInput)
             };
         });
     }
