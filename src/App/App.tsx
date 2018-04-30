@@ -231,7 +231,7 @@ class App extends React.Component<AppProps, AppState>
 
             return {
                 input: newInput,
-                output: "=0",
+                output: "= 0",
                 prevInput: ""
             };
         });
@@ -247,7 +247,7 @@ class App extends React.Component<AppProps, AppState>
 
             return {
                 input: newInput,
-                output: "=0",
+                output: "= 0",
                 prevInput: ""
             };
         });
