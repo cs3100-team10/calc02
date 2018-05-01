@@ -453,17 +453,6 @@ class App extends React.Component<AppProps, AppState>
                             </ThemeButton>
                         </li>
                         <li className="divider"></li>
-                        <li>
-                            <TextSizeButton textSize={CalcTextSize.Regular}>
-                                <FaIcon icon={faAngleDoubleDown} />
-                            </TextSizeButton>
-                        </li>
-                        <li>
-                            <TextSizeButton textSize={CalcTextSize.Large}>
-                            <FaIcon icon={faAngleDoubleUp} />
-                            </TextSizeButton>
-                        </li>
-                        <li className="divider"></li>
                     </ul>
                 }
                 
