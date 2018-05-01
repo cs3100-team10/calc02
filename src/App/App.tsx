@@ -297,7 +297,7 @@ class App extends React.Component<AppProps, AppState>
 
                 input: "",
                 output: `= ${result.toString()}`,
-                prevInput: result.toString(),
+                prevInput: prevState.input,
                 lex: false
             };
         
